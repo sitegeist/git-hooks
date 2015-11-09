@@ -3,9 +3,10 @@
 > Git-Hooks which are supporting our workflow and QA process.
 
 
-| Prefix        | Description                                                      |
-| ------------- | ---------------------------------------------------------------- |
-| `pre-commit`  | Lints all `.js` files and aborts the commit if errors are found. |
+| Prefix        | Description                                                                                        |
+| ------------- | -------------------------------------------------------------------------------------------------- |
+| `pre-commit`  | Lints all `.js` files and aborts the commit if errors are found.                                   |
+| `post-merge`  | If a meta data file for `npm` or `composer` has changed, run update commands for the dependencies. |
 
 ## License
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
