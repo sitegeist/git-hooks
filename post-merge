@@ -3,12 +3,12 @@
 
 CHANGED_FILES="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
-if grep -E 'package.json|npm-shrinkwrap.json'  <<< $CHANGED_FILES
-then
-	eval "npm install && npm prune"
-fi
+check_run() {
+	if grep -E $1  <<< $CHANGED_FILES
+	then
+		eval "$2"
+	fi
+}
 
-if grep -E 'composer.json|composer.lock' <<< $CHANGED_FILES
-then
-	eval "composer update"
-fi
+check_run 'package.json|npm-shrinkwrap.json' "npm install && npm prune"
+check_run 'omposer.json|composer.lock' "composer update"
