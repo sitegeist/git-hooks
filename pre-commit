@@ -1,0 +1,36 @@
+#!/bin/sh
+
+#
+# Get the root path of the git repository.
+#
+WORKING_DIR=$(git rev-parse --show-toplevel)
+
+#
+# Patterns we need later on for grep and other commands.
+#
+JS_PATTERN="\.js||\.json"
+CSS_PATTERN="\.scss||\.sass"
+
+#
+# Check for changes in JavaScript files, and run the configured linter against them.
+#
+git diff --cached --name-only | if grep -E '$JS_PATTERN'
+then
+	# Check for a existing grunt instance beforehand.
+	if [ -f $WORKING_DIR/Gruntfile.js ]; then
+		grunt lint:scripts
+	elif [ -f $WORKING_DIR/Gulpfile.js ]; then
+		gulp lint:scripts
+	fi
+fi
+lintResults=$?
+
+#
+# Exit with an error code if the linter has found errors.
+# ToDo: Additional feedback for the developer
+#
+if [ $lintResults -ne 0 ]; then
+	exit 1
+else
+	exit 0
+fi
