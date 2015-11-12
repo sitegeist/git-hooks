@@ -10,5 +10,12 @@ check_run() {
 	fi
 }
 
+#
+# If a `package.json` or `npm-shrinkwrap.json` file has been changed, execute `npm install` and `npm prune`.
+#
 check_run 'package.json|npm-shrinkwrap.json' "npm install && npm prune"
+
+#
+# If the `composer.json` or `composer.lock` file has been changed, execute `composer install`.
+#
 check_run 'composer.json|composer.lock' "composer install"
