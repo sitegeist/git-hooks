@@ -11,4 +11,4 @@ check_run() {
 }
 
 check_run 'package.json|npm-shrinkwrap.json' "npm install && npm prune"
-check_run 'composer.json|composer.lock' "composer update"
+check_run 'composer.json|composer.lock' "composer install"
