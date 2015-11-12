@@ -2,13 +2,16 @@
 
 > Git-Hooks which are supporting our workflow and QA process.
 
+## Available git-hooks
+#### pre-commit
+Lints all `.js` files and aborts the commit if errors are found.
 
-| Prefix               | Description                                                                                        |
-| -------------------- | -------------------------------------------------------------------------------------------------- |
-| `pre-commit`         | Lints all `.js` files and aborts the commit if errors are found.                                   |
-| `post-merge`         | If a meta data file for `npm` or `composer` has changed, run update commands for the dependencies. |
-| `prepare-commit-msg` | Evaluates the commit message against the [TYPO3 Commit guidelines](#guidelines).                   |
+#### post-merge
+If the `package.json`, `npm-shrinkwrap.json`, `composer.json` or the `composer.lock` has changed in the upstream,
+this hook will automatically run either `npm update && npm prune` or `composer update` so your local dependencies match the current checked out HEAD.
 
+#### prepare-commit-msg
+Evaluates the commit message against the [TYPO3 Commit guidelines](#guidelines).
 
 ## <a name="guidelines"></a> Commit message guidelines
 In short, a commit message must be prefixed with either `[FEATURE]`, `[TASK]`, `[BUGFIX]`, `[DOCS]` or `[CLEANUP]`. F.e:
