@@ -7,6 +7,7 @@ COMMIT_MSG_FILE="$WORKING_DIR/$1"
 COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
 PRIMARY_TAGS=("\[FEATURE\] " "\[TASK\] " "\[BUGFIX\] " "\[DOCS\] " "\[CLEANUP\] ")
 SECONDARY_TAGS=("\[!!!\]" "\[WIP\]")
+GIT_INTERNAL_MESSAGES=("Merge ")
 
 
 #
@@ -38,8 +39,7 @@ https://github.com/sitegeist/git-hooks/issues\n"
 # Format ${BRANCH_TYPE}/${ISSUE_NUMBER}/${DESCRIPTION}
 #
 appendIssueNumberToCommitMessage() {
-	if beginsWithAny "$BRANCH_NAME" "${BRANCHES_TO_SKIP[@]}";
-		then
+	if beginsWithAny "$BRANCH_NAME" "${BRANCHES_TO_SKIP[@]}"; then
 			exit 0
 		else
 			ISSUE_NUMBER=$(grep -o '\/[0-9]*\/' <<< $BRANCH_NAME)
@@ -58,17 +58,22 @@ appendIssueNumberToCommitMessage() {
 }
 
 #
+# If the git commit is an internal git commit (f.e. a merge commit), exit with 0.
+#
+if beginsWithAny "$COMMIT_MSG" "${GIT_INTERNAL_MESSAGES[@]}"; then
+	exit 0
+fi
+
+#
 # Check if the message begins with a primary prefix tag.
 #
-if beginsWithAny "$COMMIT_MSG" "${PRIMARY_TAGS[@]}";
-	then
+if beginsWithAny "$COMMIT_MSG" "${PRIMARY_TAGS[@]}"; then
 		appendIssueNumberToCommitMessage
 
 #
 # If nor primary tag was found, search for secondary prefix tags
 #
-elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}";
-	then
+elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}"; then
 		# Substring the first five chars, to remove the secondary prefix tag.
 		# ToDo: This not reliable as soon as we introduce a secondary prefix with more or less than 5 chars.
 		COMMIT_MSG_WO_SECONDARY="${COMMIT_MSG:5}"
