@@ -1,9 +1,13 @@
 #!/bin/sh
 
 WORKING_DIR=$(git rev-parse --show-toplevel)
-COMMIT_MSG=$(cat $WORKING_DIR/$1)
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+BRANCHES_TO_SKIP=(master develop)
+COMMIT_MSG_FILE="$WORKING_DIR/$1"
+COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
 PRIMARY_TAGS=("\[FEATURE\] " "\[TASK\] " "\[BUGFIX\] " "\[DOCS\] " "\[CLEANUP\] ")
 SECONDARY_TAGS=("\[!!!\]" "\[WIP\]")
+
 
 #
 # Helper function to test a string against an array.
@@ -30,11 +34,35 @@ https://github.com/sitegeist/git-hooks/issues\n"
 }
 
 #
+# Appends the issue number of the branch to the commit message.
+# Format ${BRANCH_TYPE}/${ISSUE_NUMBER}/${DESCRIPTION}
+#
+appendIssueNumberToCommitMessage() {
+	if beginsWithAny "$BRANCH_NAME" "${BRANCHES_TO_SKIP[@]}";
+		then
+			exit 0
+		else
+			ISSUE_NUMBER=$(grep -o '\/[0-9]*\/' <<< $BRANCH_NAME)
+
+			# Remove slashes
+			# ToDo: This should be solved by the regexp also.
+			ISSUE_NUMBER=${ISSUE_NUMBER%/}
+			ISSUE_NUMBER=${ISSUE_NUMBER:1}
+
+			if [[ ! -z $ISSUE_NUMBER ]]; then
+				printf "\n\nrefs #$ISSUE_NUMBER" >> "$COMMIT_MSG_FILE"
+			fi
+	fi
+
+	exit 0
+}
+
+#
 # Check if the message begins with a primary prefix tag.
 #
 if beginsWithAny "$COMMIT_MSG" "${PRIMARY_TAGS[@]}";
 	then
-		exit 0
+		appendIssueNumberToCommitMessage
 
 #
 # If nor primary tag was found, search for secondary prefix tags
@@ -42,13 +70,14 @@ if beginsWithAny "$COMMIT_MSG" "${PRIMARY_TAGS[@]}";
 elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}";
 	then
 		# Substring the first five chars, to remove the secondary prefix tag.
+		# ToDo: This not reliable as soon as we introduce a secondary prefix with more or less than 5 chars.
 		COMMIT_MSG_WO_SECONDARY="${COMMIT_MSG:5}"
 
 		#
 		# Secondary prefix tags needs to be immediately followed by primary ones.
 		#
 		if beginsWithAny "$COMMIT_MSG_WO_SECONDARY" "${PRIMARY_TAGS[@]}"; then
-			exit 0
+			appendIssueNumberToCommitMessage
 		else
 			commitMessageGuide
 		fi
@@ -59,6 +88,7 @@ elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}";
 	else
 		commitMessageGuide
 fi
+
 
 #
 # If the script hasn't exited with code zero yet, exit with an error code.

@@ -13,6 +13,21 @@ this hook will automatically run either `npm update && npm prune` or `composer u
 #### prepare-commit-msg
 Evaluates the commit message against the [TYPO3 Commit guidelines](#guidelines).
 
+In case your current branch is a feature branch, the issue number of the branch gets parsed
+and automatically appended to the commit message. For example,
+if your current branch is called `task/29381/taskDescription`, and you commit
+``` bash
+git commit -m "[TASK] Add person select to the quick booking widget"
+```
+
+The final commit message in your history will be
+```
+[TASK] Add person select to the quick booking widget
+
+refs #29381
+```
+
+
 ## <a name="guidelines"></a> Commit message guidelines
 In short, a commit message must be prefixed with either `[FEATURE]`, `[TASK]`, `[BUGFIX]`, `[DOCS]` or `[CLEANUP]`. F.e:
 ``` bash
