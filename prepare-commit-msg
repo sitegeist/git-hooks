@@ -2,32 +2,65 @@
 
 WORKING_DIR=$(git rev-parse --show-toplevel)
 COMMIT_MSG=$(cat $WORKING_DIR/$1)
+PRIMARY_TAGS=("\[FEATURE\] " "\[TASK\] " "\[BUGFIX\] " "\[DOCS\] " "\[CLEANUP\] ")
+SECONDARY_TAGS=("\[!!!\]" "\[WIP\]")
 
-isCommitMessagePrimaryPrefixed() {
-  if grep -E '^\[FEATURE\]|^\[TASK\]|^\[BUGFIX\]|^\[DOCS\]|^\[CLEANUP\]'  <<< $COMMIT_MSG
-  then
-    # 0 = true
-    return 0
-  else
-    # 1 = false
-    return 1
-  fi
+#
+# Helper function to test a string against an array.
+#
+beginsWithAny() {
+	local e
+  for e in "${@:2}"; do grep -q -E "^$e"  <<< $1 && return 0; done
+  return 1
 }
 
-if isCommitMessagePrimaryPrefixed;
-then
-	echo ""
-	#
-	# ToDo: Append the branch ticket number to the commit message.
-	#
-else
-	# ToDo: Check for additional prepended tags, and evaluate if the prepend tag is followed by a primary tag.
-	echo "The 'prepare-commit-msg' hook has found issues in your commit message.\n
+#
+# Logs out the error message and commit guidelines.
+#
+commitMessageGuide() {
+	echo "The 'prepare-commit-msg' hook has found issues in your commit message.
+
+Your commit message: "$COMMIT_MSG"
+
 A commit message should begin with '[FEATURE]', '[TASK]', '[BUGFIX]', '[DOCS]' or '[CLEANUP]'.
 Additionally you can prepend '[!!!]' for breaking changes or '[WIP]' for changes that aren't fully finished.
 
 If this behavior is not intended, please open a issue containing your commit message on the following bug tracker.
 https://github.com/sitegeist/git-hooks/issues\n"
+}
 
-	exit 1
+#
+# Check if the message begins with a primary prefix tag.
+#
+if beginsWithAny "$COMMIT_MSG" "${PRIMARY_TAGS[@]}";
+	then
+		exit 0
+
+#
+# If nor primary tag was found, search for secondary prefix tags
+#
+elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}";
+	then
+		# Substring the first five chars, to remove the secondary prefix tag.
+		COMMIT_MSG_WO_SECONDARY="${COMMIT_MSG:5}"
+
+		#
+		# Secondary prefix tags needs to be immediately followed by primary ones.
+		#
+		if beginsWithAny "$COMMIT_MSG_WO_SECONDARY" "${PRIMARY_TAGS[@]}"; then
+			exit 0
+		else
+			commitMessageGuide
+		fi
+
+	#
+	# If no prefix tag, nor primary and secondary was found, throw an error
+	#
+	else
+		commitMessageGuide
 fi
+
+#
+# If the script hasn't exited with code zero yet, exit with an error code.
+#
+exit 1
