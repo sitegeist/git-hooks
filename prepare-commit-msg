@@ -1,0 +1,33 @@
+#!/bin/sh
+
+WORKING_DIR=$(git rev-parse --show-toplevel)
+COMMIT_MSG=$(cat $WORKING_DIR/$1)
+
+isCommitMessagePrimaryPrefixed() {
+  if grep -E '^\[FEATURE\]|^\[TASK\]|^\[BUGFIX\]|^\[DOCS\]|^\[CLEANUP\]'  <<< $COMMIT_MSG
+  then
+    # 0 = true
+    return 0
+  else
+    # 1 = false
+    return 1
+  fi
+}
+
+if isCommitMessagePrimaryPrefixed;
+then
+	echo ""
+	#
+	# ToDo: Append the branch ticket number to the commit message.
+	#
+else
+	# ToDo: Check for additional prepended tags, and evaluate if the prepend tag is followed by a primary tag.
+	echo "The 'prepare-commit-msg' hook has found issues in your commit message.\n
+A commit message should begin with '[FEATURE]', '[TASK]', '[BUGFIX]', '[DOCS]' or '[CLEANUP]'.
+Additionally you can prepend '[!!!]' for breaking changes or '[WIP]' for changes that aren't fully finished.
+
+If this behavior is not intended, please open a issue containing your commit message on the following bug tracker.
+https://github.com/sitegeist/git-hooks/issues\n"
+
+	exit 1
+fi
