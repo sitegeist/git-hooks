@@ -7,15 +7,16 @@
 Lints all `.js` files and aborts the commit if errors are found.
 
 #### post-merge
-If the `package.json`, `npm-shrinkwrap.json`, `composer.json` or the `composer.lock` has changed in the upstream,
+If the `package.json`, `npm-shrinkwrap.json`, `composer.json` or the `composer.lock` has been changed in the upstream,
 this hook will automatically run either `npm update && npm prune` or `composer update` so your local dependencies match the current checked out HEAD.
 
 #### prepare-commit-msg
 Evaluates the commit message against the [TYPO3 Commit guidelines](#guidelines).
 
 In case your current branch is a feature branch, the issue number of the branch gets parsed
-and automatically appended to the commit message. For example,
-if your current branch is called `task/29381/taskDescription`, and you commit
+and automatically appended to the commit message.
+
+For example, if your current branch is called `task/29381/taskDescription`, and you commit
 ``` bash
 git commit -m "[TASK] Add person select to the quick booking widget"
 ```
@@ -26,7 +27,6 @@ The final commit message in your history will be
 
 refs #29381
 ```
-
 
 ## <a name="guidelines"></a> Commit message guidelines
 In short, a commit message must be prefixed with either `[FEATURE]`, `[TASK]`, `[BUGFIX]`, `[DOCS]` or `[CLEANUP]`. F.e:
@@ -41,7 +41,6 @@ git commit -m "[!!!][TASK] Change the person argument of the booking API for con
 ```
 
 For an overview of the commit message guidelines, please visit the official [TYPO3 commit guidelines page](https://wiki.typo3.org/CommitMessage_Format_(Git)#Commit_Message_rules_for_TYPO3_CMS).
-
 
 ## License
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
