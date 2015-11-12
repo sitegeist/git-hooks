@@ -7,10 +7,10 @@
 | -------------------- | -------------------------------------------------------------------------------------------------- |
 | `pre-commit`         | Lints all `.js` files and aborts the commit if errors are found.                                   |
 | `post-merge`         | If a meta data file for `npm` or `composer` has changed, run update commands for the dependencies. |
-| `prepare-commit-msg` | Evaluates the commit message against the [TYPO3 Commit guidelines]().                                  |
+| `prepare-commit-msg` | Evaluates the commit message against the [TYPO3 Commit guidelines](#guidelines).                   |
 
 
-## Commit message guidelines
+## <a name="guidelines"></a> Commit message guidelines
 In short, a commit message must be prefixed with either `[FEATURE]`, `[TASK]`, `[BUGFIX]`, `[DOCS]` or `[CLEANUP]`. F.e:
 ``` bash
 git commit -m "[FEATURE] Add person select to the quick booking widget"
