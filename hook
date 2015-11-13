@@ -55,6 +55,14 @@ install_hooks() {
 }
 
 #
+# Automatically update the hooks every 30 days.
+#
+if test `find "$HOME/.sitegeist-hooks/.last_modified" -mmin +43200`
+then
+    update__hooks
+fi
+
+#
 # Depending on the passed argument, either print the usage guidelines, update the hooks or install them.
 #
 for argument in "$@"
