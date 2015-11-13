@@ -39,7 +39,7 @@ install_hooks() {
 		for f in "${HOOKS[@]}"
 		do
 			if [ -f "`pwd`/.git/hooks/$(basename $f)" ]; then
-				p_warn "$(basename $f) already in place."
+				p_warn "Skipping hook '$(basename $f)' because it's already in place."
 			else
 				p_info "Linking $(basename $f) to `pwd`/.git/hooks/..."
 				ln -s ${f} `pwd`/.git/hooks/
