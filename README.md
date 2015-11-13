@@ -2,6 +2,18 @@
 
 > Git-Hooks which are supporting our workflow and QA process.
 
+## Installation
+``` bash
+git clone https://github.com/sitegeist/git-hooks.git $HOME/.sitegeist-hooks && cd $HOME/.sitegeist-hooks && ./install && cd
+```
+
+## CLI
+Change into your package directory which contains your local `.git/` repository and run:
+``` bash
+hook
+```
+Afterwards all available hooks should be installed in your local repository.
+
 ## Available git-hooks
 #### pre-commit
 Lints all `.js` files and aborts the commit if errors are found.

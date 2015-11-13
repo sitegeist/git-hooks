@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+#
+# sitegeist/git-hooks
+#
+# Installation script for the hook CLI.
+#
+# Author: André König <koenig@sitegeist.de>
+#
+
+SHELLTYPE="$(basename /$SHELL)"
+
+if [ $SHELLTYPE = "bash" ]; then
+    if [ -f "$HOME/.bashrc" ]; then
+        DETECTED_PROFILE="$HOME/.bashrc"
+    elif [ -f "$HOME/.bash_profile" ]; then
+        DETECTED_PROFILE="$HOME/.bash_profile"
+    fi
+    elif [ $SHELLTYPE = "zsh" ]; then
+        DETECTED_PROFILE="$HOME/.zshrc"
+fi
+
+if [ -z $DETECTED_PROFILE ]; then
+    if [ -f "$PROFILE" ]; then
+        DETECTED_PROFILE="$PROFILE"
+    elif [ -f "$HOME/.profile" ]; then
+        DETECTED_PROFILE="$HOME/.profile"
+    elif [ -f "$HOME/.bashrc" ]; then
+        DETECTED_PROFILE="$HOME/.bashrc"
+    elif [ -f "$HOME/.bash_profile" ]; then
+        DETECTED_PROFILE="$HOME/.bash_profile"
+    elif [ -f "$HOME/.zshrc" ]; then
+        DETECTED_PROFILE="$HOME/.zshrc"
+    fi
+fi
+
+echo "export PATH=$PATH:`pwd`" >> $DETECTED_PROFILE && source $DETECTED_PROFILE
