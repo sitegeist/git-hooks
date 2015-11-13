@@ -18,7 +18,10 @@ Afterwards all available hooks should be installed in your local repository.
 | Argument      | Description                            |
 | ------------- | -------------------------------------- |
 | `--help`      | Prints the usage guidelines.           |
-| `self-update` | Updates your installed hooks globally. |
+| `self-update` | Updates the hooks.                     |
+
+#### Why bother install them globally?
+These git-hooks are conventional hooks, not project specific ones. Installing them globally reduces the amount of time you need to invest once a bug has been found in one of the hooks. Just run `self-update` once and the hooks are updated everywhere since they all point to the global instance.
 
 ## Available git-hooks
 #### pre-commit
