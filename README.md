@@ -14,6 +14,11 @@ hook
 ```
 Afterwards all available hooks should be installed in your local repository.
 
+#### Arguments
+| Argument      | Description                  |
+| ------------- | ---------------------------- |
+| `--help`      | Prints the usage guidelines. |
+
 ## Available git-hooks
 #### pre-commit
 Lints all `.js` files and aborts the commit if errors are found.
