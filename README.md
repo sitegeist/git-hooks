@@ -8,7 +8,8 @@ git clone https://github.com/sitegeist/git-hooks.git $HOME/.sitegeist-hooks && c
 ```
 
 ## CLI
-Change into your package directory which contains your local `.git/` repository and run:
+`cd` into your target directory which contains your local `.git/` repository and run hook.
+
 ``` bash
 hook
 ```

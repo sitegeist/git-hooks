@@ -68,7 +68,7 @@ fi
 for argument in "$@"
 do
 	if [ $argument = "--help" ]; then
-		p_help "Usage: Change into your package directory which contains your local .git/ repository and run hook."
+		p_help "Usage: cd into your target directory which contains your local .git/ repository and run hook."
 		exit 0
 	elif [ $argument = "self-update" ]; then
 		update__hooks
