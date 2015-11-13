@@ -9,6 +9,9 @@ p_success () {
 p_info () {
 	printf "[\033[1;36m .. \033[0m] $1\n"
 }
+p_warn () {
+	printf "[\033[0;33mWARN\033[0m] $1\n"
+}
 p_fail () {
 	printf "[\033[0;31mFAIL\033[0m] $1\n"
 }
@@ -17,33 +20,51 @@ p_help() {
 }
 
 #
-# Conditionally print the usage guide.
+# Self-Update mechanism.
 #
-if [ $1 = "--help" ]; then
-	p_help "Usage: Change into your package directory which contains your local .git/ repository and run hook."
-	exit 0
-fi
+update__hooks() {
+	p_info "Updating the git-hooks..."
+
+	cd "$HOME/.sitegeist-hooks/" && git pull origin master && cd
+}
 
 #
-# Or install the git-hooks if the current pwd has a .git/ dir.
+# Install the git-hooks if the current pwd has a .git/ dir.
 #
-if [ "$(ls -R 2>/dev/null -A `pwd`/.git)" ]; then
-	p_info "Installing git hooks in the current working directory."
+install_hooks() {
+	if [ "$(ls -R 2>/dev/null -A `pwd`/.git)" ]; then
+		p_info "Installing git hooks in the current working directory."
 
-	HOOKS=("$HOME/.sitegeist-hooks/hooks/"*)
-	for f in "${HOOKS[@]}"
-	do
-		if [ -f "`pwd`/.git/hooks/$(basename $f)" ]; then
-			p_info "$(basename $f) already in place."
-		else
-			p_info "Linking $$(basename $f) to `pwd`/.git/hooks/..."
-			ln -s ${f} `pwd`/.git/hooks/
-		fi
-	done
+		HOOKS=("$HOME/.sitegeist-hooks/hooks/"*)
+		for f in "${HOOKS[@]}"
+		do
+			if [ -f "`pwd`/.git/hooks/$(basename $f)" ]; then
+				p_warn "$(basename $f) already in place."
+			else
+				p_info "Linking $$(basename $f) to `pwd`/.git/hooks/..."
+				ln -s ${f} `pwd`/.git/hooks/
+			fi
+		done
 
-	p_success "Done."
-else
-	p_fail "Error: Your current directory has no '.git/' folder, please change into your root package directory and run this command again."
+		p_success "Done."
+	else
+		p_fail "Error: Your current directory has no '.git/' folder, please change into your root package directory and run this command again."
 
-	exit 1
-fi
+		exit 1
+	fi
+}
+
+#
+# Depending on the passed argument, either print the usage guidelines, update the hooks or install them.
+#
+for argument in "$@"
+do
+	if [ $argument = "--help" ]; then
+		p_help "Usage: Change into your package directory which contains your local .git/ repository and run hook."
+		exit 0
+	elif [ $argument = "self-update" ]; then
+		update__hooks
+	else
+		install_hooks
+	fi
+done

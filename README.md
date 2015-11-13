@@ -15,9 +15,10 @@ hook
 Afterwards all available hooks should be installed in your local repository.
 
 #### Arguments
-| Argument      | Description                  |
-| ------------- | ---------------------------- |
-| `--help`      | Prints the usage guidelines. |
+| Argument      | Description                            |
+| ------------- | -------------------------------------- |
+| `--help`      | Prints the usage guidelines.           |
+| `self-update` | Updates your installed hooks globally. |
 
 ## Available git-hooks
 #### pre-commit
