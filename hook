@@ -41,7 +41,7 @@ install_hooks() {
 			if [ -f "`pwd`/.git/hooks/$(basename $f)" ]; then
 				p_warn "$(basename $f) already in place."
 			else
-				p_info "Linking $$(basename $f) to `pwd`/.git/hooks/..."
+				p_info "Linking $(basename $f) to `pwd`/.git/hooks/..."
 				ln -s ${f} `pwd`/.git/hooks/
 			fi
 		done
@@ -65,14 +65,17 @@ fi
 #
 # Depending on the passed argument, either print the usage guidelines, update the hooks or install them.
 #
-for argument in "$@"
-do
-	if [ $argument = "--help" ]; then
-		p_help "Usage: cd into your target directory which contains your local .git/ repository and run hook."
-		exit 0
-	elif [ $argument = "self-update" ]; then
-		update__hooks
+if [ $# -eq 0 ]
+  then
+    install_hooks
 	else
-		install_hooks
-	fi
-done
+		for argument in "$@"
+		do
+			if [ $argument = "--help" ]; then
+				p_help "Usage: cd into your target directory which contains your local .git/ repository and run hook."
+				exit 0
+			elif [ $argument = "self-update" ]; then
+				update__hooks
+			fi
+		done
+fi
