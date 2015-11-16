@@ -5,7 +5,7 @@
 #
 # Installation script for the hook CLI.
 #
-# Author: André König <koenig@sitegeist.de>
+# Authors: Tyll Weiß <weiss@sitegeist.de>, André König <koenig@sitegeist.de>
 #
 
 SHELLTYPE="$(basename /$SHELL)"

@@ -1,6 +1,14 @@
 #!/bin/sh
 
 #
+# sitegeist/git-hooks
+#
+# The global hook CLI.
+#
+# Authors: Tyll Weiß <weiss@sitegeist.de>
+#
+
+#
 # A set of helper classes.
 #
 p_success () {
