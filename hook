@@ -28,6 +28,13 @@ p_help() {
 }
 
 #
+# Print the usage help
+#
+print_help() {
+	p_help "Usage: cd into your target directory which contains your local .git/ repository and run hook."
+}
+
+#
 # Self-Update mechanism.
 #
 update__hooks() {
@@ -56,7 +63,7 @@ install_hooks() {
 
 		p_success "Done."
 	else
-		p_fail "Error: Your current directory has no '.git/' folder, please change into your root package directory and run this command again."
+		p_fail "Fatal Error: Your current directory has no '.git/' folder, please change into your root package directory and run this command again."
 
 		exit 1
 	fi
@@ -80,10 +87,14 @@ if [ $# -eq 0 ]
 		for argument in "$@"
 		do
 			if [ $argument = "--help" ]; then
-				p_help "Usage: cd into your target directory which contains your local .git/ repository and run hook."
+				print_help
 				exit 0
 			elif [ $argument = "self-update" ]; then
 				update__hooks
+			else
+				p_fail "Fatal Error: Unknown argument '$argument'. \n       For help regarding the Hook CLI execute 'hook --help'."
+
+				exit 1
 			fi
 		done
 fi
