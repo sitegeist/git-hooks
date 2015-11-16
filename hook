@@ -23,15 +23,39 @@ p_warn () {
 p_fail () {
 	printf "[\033[0;31mFAIL\033[0m] $1\n"
 }
-p_help() {
-	printf "[\033[0;33m ? \033[0m] $1\n"
-}
 
 #
 # Print the usage help
 #
 print_help() {
-	p_help "Usage: cd into your target directory which contains your local .git/ repository and run hook."
+	underline=`tput smul`
+	nounderline=`tput rmul`
+	bold=`tput bold`
+	normal=`tput sgr0`
+
+	echo "${bold}Hook CLI.${normal}
+
+${underline}General Usage:${nounderline}
+'cd' into your target directory which contains your local '.git/' repository and run 'hook'.
+
+${underline}List of all available commands:${nounderline}
+help		Prints the general CLI usage.
+help:hooks	Prints info about all hooks.
+self-update	Update all hooks which where installed via the CLI.
+
+Need help or got an issue? Report bugs at ${underline}https://github.com/sitegeist/git-hooks/issues${nounderline}."
+}
+
+#
+# Print help about all hooks.
+#
+print_hook_help() {
+	echo "${bold}Hook CLI.${normal}
+
+${underline}List of all installed hooks:${nounderline}
+pre-commit		Lints all changed files and aborts the commit if errors are found.
+post-merge		Updates your npm or composer dependencies if the respective meta-file was changed.
+prepare-commit-msg	Evaluates the commit message against the TYPO3 commit message guidelines."
 }
 
 #
@@ -87,6 +111,9 @@ if [ $# -eq 0 ]
 		case "$1" in
 			"--help" | "-h" | "help")
 				print_help
+				;;
+			"help:hooks")
+				print_hook_help
 				;;
 			"self-update")
 				update__hooks
