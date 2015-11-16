@@ -1,4 +1,4 @@
-# sitegeist/git-hooks
+# sitegeist/git-hooks [![Build Status](https://travis-ci.org/sitegeist/git-hooks.svg)](https://travis-ci.org/sitegeist/git-hooks)
 
 > Git-Hooks which are supporting our workflow and QA process.
 
