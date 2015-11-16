@@ -1,7 +1,6 @@
 #!/bin/sh
 
 WORKING_DIR=$(git rev-parse --show-toplevel)
-BRANCH_NAME=$(git symbolic-ref --short HEAD)
 BRANCHES_TO_SKIP=(master develop)
 COMMIT_MSG_FILE="$WORKING_DIR/$1"
 COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
@@ -38,6 +37,8 @@ https://github.com/sitegeist/git-hooks/issues\n"
 # Format ${BRANCH_TYPE}/${ISSUE_NUMBER}/${DESCRIPTION}
 #
 appendIssueNumberToCommitMessage() {
+	BRANCH_NAME=$(git symbolic-ref --short HEAD)
+
 	if beginsWithAny "$BRANCH_NAME" "${BRANCHES_TO_SKIP[@]}"; then
 			exit 0
 		else
@@ -86,11 +87,17 @@ elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}"; then
 			commitMessageGuide
 		fi
 
-	#
-	# If no prefix tag, nor primary and secondary was found, throw an error
-	#
-	else
-		commitMessageGuide
+#
+#
+#
+elif [ $(git rev-parse --abbrev-ref HEAD) == "HEAD" ]; then
+	exit 0
+
+#
+# If no prefix tag, nor primary and secondary was found, throw an error
+#
+else
+	commitMessageGuide
 fi
 
 #
