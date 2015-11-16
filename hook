@@ -84,17 +84,19 @@ if [ $# -eq 0 ]
   then
     install_hooks
 	else
-		for argument in "$@"
-		do
-			if [ $argument = "--help" ]; then
+		case "$1" in
+			"--help" | "-h" | "help")
 				print_help
-				exit 0
-			elif [ $argument = "self-update" ]; then
+				;;
+			"self-update")
 				update__hooks
-			else
-				p_fail "Fatal Error: Unknown argument '$argument'. \n       For help regarding the Hook CLI execute 'hook --help'."
+				;;
+			*)
+				p_fail "Fatal Error: Unknown argument '$1'. \n       For help regarding the Hook CLI execute 'hook --help'."
 
 				exit 1
-			fi
-		done
+				;;
+		esac
 fi
+
+exit 0

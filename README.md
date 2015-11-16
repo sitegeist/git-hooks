@@ -18,7 +18,7 @@ Afterwards all available hooks should be installed in your local repository.
 #### Arguments
 | Argument      | Description                            |
 | ------------- | -------------------------------------- |
-| `--help`      | Prints the usage guidelines.           |
+| `help`        | Prints the usage guidelines.           |
 | `self-update` | Updates the hooks.                     |
 
 #### Why bother install them globally?
