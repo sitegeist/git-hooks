@@ -1,0 +1,10 @@
+#!/usr/bin/env bats
+
+@test "The CLI should exist and exit with code 0 if an valid argument was passed." {
+  run hook help
+  [ "$status" -eq 0 ]
+}
+@test "The CLI should exit with code 1 if an invalid argument was passed." {
+  run hook invalid_argument
+  [ "$status" -eq 1 ]
+}
