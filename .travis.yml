@@ -8,7 +8,6 @@ before_script:
   - cd $HOME/.sitegeist-hooks
   - ./install
   - export PATH=$PATH:$HOME/.sitegeist-hooks
-  - hook help
   - cd $TRAVIS_BUILD_DIR
 script:
   - bats ./tests/cli
