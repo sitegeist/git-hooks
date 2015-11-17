@@ -1,7 +1,6 @@
 #!/bin/sh
 
 WORKING_DIR=$(git rev-parse --show-toplevel)
-BRANCHES_TO_SKIP=(master develop)
 COMMIT_MSG_FILE="$WORKING_DIR/$1"
 COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
 PRIMARY_TAGS=("\[FEATURE\] " "\[TASK\] " "\[BUGFIX\] " "\[DOCS\] " "\[CLEANUP\] ")
@@ -38,6 +37,7 @@ https://github.com/sitegeist/git-hooks/issues\n"
 #
 appendIssueNumberToCommitMessage() {
 	BRANCH_NAME=$(git symbolic-ref --short HEAD)
+	BRANCHES_TO_SKIP=(master develop)
 
 	if beginsWithAny "$BRANCH_NAME" "${BRANCHES_TO_SKIP[@]}"; then
 			exit 0
