@@ -74,8 +74,8 @@ install_hooks() {
 	if [ "$(ls -R 2>/dev/null -A `pwd`/.git)" ]; then
 		p_info "Installing git hooks in the current working directory."
 
-		HOOKS=("$HOME/.sitegeist-hooks/hooks/"*)
-		for f in "${HOOKS[@]}"
+		HOOKS=$HOME/.sitegeist-hooks/hooks/*
+		for f in $HOOKS
 		do
 			if [ -f "`pwd`/.git/hooks/$(basename $f)" ]; then
 				p_warn "Skipping hook '$(basename $f)' because it's already in place."
