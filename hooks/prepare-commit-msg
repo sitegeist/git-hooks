@@ -79,7 +79,7 @@ elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}"; then
 		COMMIT_MSG_WO_SECONDARY="${COMMIT_MSG:5}"
 
 		#
-		# Secondary prefix tags needs to be immediately followed by primary ones.
+		# Make sure that the secondary prefix tag is immediately followed by a primary one.
 		#
 		if beginsWithAny "$COMMIT_MSG_WO_SECONDARY" "${PRIMARY_TAGS[@]}"; then
 			appendIssueNumberToCommitMessage
@@ -88,7 +88,8 @@ elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}"; then
 		fi
 
 #
-#
+# If the repository is f.e. in an ongoing rebase process,
+# exit with code 0 since the user can't commit in this state anyway.
 #
 elif [ $(git rev-parse --abbrev-ref HEAD) == "HEAD" ]; then
 	exit 0
