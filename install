@@ -44,14 +44,7 @@ if [ -z $DETECTED_PROFILE ]; then
     fi
 fi
 
-echo "Installing the Hook CLI into $DETECTED_PROFILE..."
-
-echo "export PATH=$PATH:`pwd`" >> $DETECTED_PROFILE && source $DETECTED_PROFILE
-
-if command_exists "hook"; then
-  echo "Success. Type in 'hook help' to get started."
-  exit 0
-else
+if [ -z $DETECTED_PROFILE ]; then
   echo "Seems like the Hook CLI couldn't be installed.
 
 Log:
@@ -62,4 +55,9 @@ Please report this issue with the values reported above.
 https://github.com/sitegeist/git-hooks/issues"
 
   exit 1
+else
+  echo "Installing the Hook CLI into $DETECTED_PROFILE..."
+  echo "export PATH=$PATH:`pwd`" >> $DETECTED_PROFILE && source $DETECTED_PROFILE
+  echo "Success. Type in 'hook help' to get started."
+  exit 0
 fi
