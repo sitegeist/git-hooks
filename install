@@ -10,6 +10,16 @@
 
 SHELLTYPE="$(basename /$SHELL)"
 
+#
+# Test whether a command exists.
+#
+command_exists() {
+  if [ `type -P $1` ]; then
+    return 0
+  fi
+  return 1
+}
+
 if [ $SHELLTYPE = "bash" ]; then
     if [ -f "$HOME/.bashrc" ]; then
         DETECTED_PROFILE="$HOME/.bashrc"
@@ -34,4 +44,22 @@ if [ -z $DETECTED_PROFILE ]; then
     fi
 fi
 
+echo "Installing the Hook CLI into $DETECTED_PROFILE..."
+
 echo "export PATH=$PATH:`pwd`" >> $DETECTED_PROFILE && source $DETECTED_PROFILE
+
+if command_exists "hook"; then
+  echo "Success. Type in 'hook help' to get started."
+  exit 0
+else
+  echo "Seems like the Hook CLI couldn't be installed.
+
+Log:
+Profile     $DETECTED_PROFILE
+Shelltype:  $SHELLTYPE
+
+Please report this issue with the values reported above.
+https://github.com/sitegeist/git-hooks/issues"
+
+  exit 1
+fi
