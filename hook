@@ -119,7 +119,7 @@ if [ $# -eq 0 ]
 				update__hooks
 				;;
 			*)
-				p_fail "Fatal Error: Unknown argument '$1'. For help regarding the Hook CLI execute 'hook --help'."
+				p_fail "Fatal Error: Unknown argument '$1'. For help regarding the Hook CLI execute 'hook help'."
 
 				exit 1
 				;;
