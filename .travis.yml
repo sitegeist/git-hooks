@@ -3,6 +3,8 @@ before_install:
   - sudo add-apt-repository ppa:duggan/bats --yes
   - sudo apt-get update -qq
   - sudo apt-get install -qq bats
-install: ./install
+before_script:
+  - git clone https://github.com/sitegeist/git-hooks.git $HOME/.sitegeist-hooks
+  - $HOME/.sitegeist-hooks/install
 script:
   - bats ./tests/cli
