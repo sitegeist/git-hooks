@@ -15,11 +15,13 @@ hook
 ```
 Afterwards all available hooks should be installed in your local repository.
 
-#### Arguments
-| Argument      | Description                            |
-| ------------- | -------------------------------------- |
-| `help`        | Prints the usage guidelines.           |
-| `self-update` | Updates the hooks.                     |
+#### Commands
+| Command            | Description                                                     |
+| ------------------ | --------------------------------------------------------------- |
+| `hook`             | Installs all hooks in your current working directory.           |
+| `hook self-update` | Updates all installed hooks which you've installed via the CLI. |
+| `hook help`        | Prints the usage guidelines.                                    |
+| `hook help:hooks`  | Prints a list of all installed hooks.                           |
 
 #### Why bother install them globally?
 These git-hooks are conventional hooks, not project specific ones. Installing them globally reduces the amount of time you need to invest once a bug has been found in one of the hooks. Just run `self-update` once and the hooks are updated everywhere since they all point to the global instance.
