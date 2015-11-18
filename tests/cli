@@ -8,3 +8,11 @@
   run hook invalid_argument
   [ "$status" -eq 1 ]
 }
+@test "The CLI should exit with code 0 if executed with the 'help:hooks' command." {
+  run hook help:hooks
+  [ "$status" -eq 0 ]
+}
+@test "The CLI should exit with code 0 if executed with the 'self-update' command." {
+  run hook self-update
+  [ "$status" -eq 0 ]
+}
