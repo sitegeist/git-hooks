@@ -9,7 +9,16 @@
 #
 
 #
-# A set of helper classes.
+# Decorative text helpers.
+#
+underline=`tput smul`
+nounderline=`tput rmul`
+bold=`tput bold`
+normal=`tput sgr0`
+
+
+#
+# A set of helper functions.
 #
 p_success () {
 	printf "[ \033[00;32mOK\033[0m ] $1\n"
@@ -25,14 +34,9 @@ p_fail () {
 }
 
 #
-# Print the usage help
+# Print the general cli usage guide.
 #
 print_help() {
-	underline=`tput smul`
-	nounderline=`tput rmul`
-	bold=`tput bold`
-	normal=`tput sgr0`
-
 	echo "${bold}Hook CLI.${normal}
 
 ${underline}General Usage:${nounderline}
@@ -47,7 +51,7 @@ Need help or got an issue? Report bugs at ${underline}https://github.com/sitegei
 }
 
 #
-# Print help about all hooks.
+# Print the descriptive guide for all hooks.
 #
 print_hook_help() {
 	echo "${bold}Hook CLI.${normal}
