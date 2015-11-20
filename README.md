@@ -30,7 +30,8 @@ In that case, just run `self-update` once and all hooks which you've installed v
 
 ## Available git-hooks
 #### pre-commit
-Lints all `.js` files and aborts the commit if errors are found.
+Lints all `.js` files via [pipe](https://github.com/pipelinejs/pipe) if the directory contains a `Pipefile.js` (Gulp & Grunt support coming soon.).
+If the lint process exits with an error code, the commit will be aborted, until you fix the errors.
 
 #### post-merge
 If the `package.json`, `npm-shrinkwrap.json`, `composer.json` or the `composer.lock` has been changed in the upstream,

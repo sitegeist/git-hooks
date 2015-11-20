@@ -1,6 +1,13 @@
 #!/bin/sh
 
 #
+# Decorative log helpers.
+#
+p_fail () {
+	printf "[\033[0;31mFAIL\033[0m] $1\n"
+}
+
+#
 # Get the root path of the git repository.
 #
 WORKING_DIR=$(git rev-parse --show-toplevel)
@@ -8,19 +15,16 @@ WORKING_DIR=$(git rev-parse --show-toplevel)
 #
 # Patterns we need later on for grep and other commands.
 #
-JS_PATTERN="\.js||\.json"
-CSS_PATTERN="\.scss||\.sass"
+CHANGED_JS_FILES=$(git diff --cached --name-only -- '*.js')
 
 #
 # Check for changes in JavaScript files, and run the configured linter against them.
 #
-git diff --cached --name-only | if grep -E '$JS_PATTERN'
-then
-	# Check for a existing grunt instance beforehand.
-	if [ -f $WORKING_DIR/Gruntfile.js ]; then
-		grunt lint:scripts
-	elif [ -f $WORKING_DIR/Gulpfile.js ]; then
-		gulp lint:scripts
+if [ ! -z "$CHANGED_JS_FILES" ]; then
+	# Check for an existing pipe instance beforehand.
+	if [ -f "$WORKING_DIR/Pipefile.js" ] || [ -f "$WORKING_DIR/pipefile.js" ]; then
+		echo "Hook CLI: Found changes in JavaScript files. Linting via the pipe task-runner..."
+		pipe lint:scripts
 	fi
 fi
 lintResults=$?
@@ -30,6 +34,8 @@ lintResults=$?
 # ToDo: Additional feedback for the developer
 #
 if [ $lintResults -ne 0 ]; then
+	p_fail "Something went wrong while linting the changed files. Fix the errors and commit again."
+
 	exit 1
 fi
 
