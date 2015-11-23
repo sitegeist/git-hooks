@@ -17,14 +17,9 @@ bold=`tput bold`
 normal=`tput sgr0`
 
 #
-# Base directory, where the hooks are installed (Differ from user and CI).
+# Base directory, where the hook CLI should be installed.
 #
-if [ $CI ]
-	then
-		BASE_DIR="$TRAVIS_BUILD_DIR/.sitegeist-hooks"
-	else
-		BASE_DIR="$HOME/.sitegeist-hooks"
-fi
+BASE_DIR="$HOME/.sitegeist-hooks"
 
 #
 # A set of helper functions.
