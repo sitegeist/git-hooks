@@ -57,7 +57,7 @@ https://github.com/sitegeist/git-hooks/issues"
   exit 1
 else
   echo "Installing the Hook CLI into $DETECTED_PROFILE..."
-  echo "export PATH=$PATH:`pwd`" >> $DETECTED_PROFILE && source $DETECTED_PROFILE
+  echo "export PATH=$PATH:`pwd/bin`" >> $DETECTED_PROFILE && source $DETECTED_PROFILE
   echo "Success. Type in 'hook help' to get started."
   exit 0
 fi
