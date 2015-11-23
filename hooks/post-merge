@@ -4,7 +4,7 @@
 CHANGED_FILES="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
 check_run() {
-	if grep -E $1  <<< $CHANGED_FILES
+	if grep -q -E $1  <<< $CHANGED_FILES
 	then
 		eval "$2"
 	fi
