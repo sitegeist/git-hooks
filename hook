@@ -16,6 +16,15 @@ nounderline=`tput rmul`
 bold=`tput bold`
 normal=`tput sgr0`
 
+#
+# Base directory, where the hooks are installed (Differ from user and CI).
+#
+if [ $CI ]
+	then
+		BASE_DIR="$TRAVIS_BUILD_DIR/.sitegeist-hooks"
+	else
+		BASE_DIR="$HOME/.sitegeist-hooks"
+fi
 
 #
 # A set of helper functions.
@@ -68,7 +77,7 @@ prepare-commit-msg	Evaluates the commit message against the TYPO3 commit message
 update__hooks() {
 	p_info "Updating the git-hooks..."
 
-	cd "$HOME/.sitegeist-hooks/" && git pull origin master && cd
+	cd "$BASE_DIR" && git pull origin master && rm .last_modified && touch .last_modified && cd
 }
 
 #
@@ -78,7 +87,7 @@ install_hooks() {
 	if [ "$(ls -R 2>/dev/null -A `pwd`/.git)" ]; then
 		p_info "Installing git hooks in the current working directory."
 
-		HOOKS=$HOME/.sitegeist-hooks/hooks/*
+		HOOKS=$BASE_DIR/hooks/*
 		for f in $HOOKS
 		do
 			if [ -f "`pwd`/.git/hooks/$(basename $f)" ]; then
@@ -98,9 +107,16 @@ install_hooks() {
 }
 
 #
+# Create the last_modified file, if not currently present.
+#
+if [ ! -f "$BASE_DIR/.last_modified" ]; then
+	touch "$BASE_DIR/.last_modified"
+fi
+
+#
 # Automatically update the hooks every 30 days.
 #
-if test `find "$HOME/.sitegeist-hooks/.last_modified" -mmin +43200`
+if test `find "$BASE_DIR/.last_modified" -mmin +43200`
 then
     update__hooks
 fi
