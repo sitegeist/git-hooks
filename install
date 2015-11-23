@@ -14,50 +14,51 @@ SHELLTYPE="$(basename /$SHELL)"
 # Test whether a command exists.
 #
 command_exists() {
-  if [ `type -P $1` ]; then
-    return 0
-  fi
+	if [ `type -P $1` ]; then
+	   return 0
+	fi
+
   return 1
 }
 
 if [ $SHELLTYPE = "bash" ]; then
-    if [ -f "$HOME/.bashrc" ]; then
-        DETECTED_PROFILE="$HOME/.bashrc"
-    elif [ -f "$HOME/.bash_profile" ]; then
-        DETECTED_PROFILE="$HOME/.bash_profile"
-    fi
-    elif [ $SHELLTYPE = "zsh" ]; then
-        DETECTED_PROFILE="$HOME/.zshrc"
+	if [ -f "$HOME/.bashrc" ]; then
+		DETECTED_PROFILE="$HOME/.bashrc"
+	elif [ -f "$HOME/.bash_profile" ]; then
+		DETECTED_PROFILE="$HOME/.bash_profile"
+	fi
+	elif [ $SHELLTYPE = "zsh" ]; then
+		DETECTED_PROFILE="$HOME/.zshrc"
 fi
 
 if [ -z $DETECTED_PROFILE ]; then
-    if [ -f "$PROFILE" ]; then
-        DETECTED_PROFILE="$PROFILE"
-    elif [ -f "$HOME/.profile" ]; then
-        DETECTED_PROFILE="$HOME/.profile"
-    elif [ -f "$HOME/.bashrc" ]; then
-        DETECTED_PROFILE="$HOME/.bashrc"
-    elif [ -f "$HOME/.bash_profile" ]; then
-        DETECTED_PROFILE="$HOME/.bash_profile"
-    elif [ -f "$HOME/.zshrc" ]; then
-        DETECTED_PROFILE="$HOME/.zshrc"
-    fi
+	if [ -f "$PROFILE" ]; then
+		DETECTED_PROFILE="$PROFILE"
+	elif [ -f "$HOME/.profile" ]; then
+		DETECTED_PROFILE="$HOME/.profile"
+	elif [ -f "$HOME/.bashrc" ]; then
+		DETECTED_PROFILE="$HOME/.bashrc"
+	elif [ -f "$HOME/.bash_profile" ]; then
+		DETECTED_PROFILE="$HOME/.bash_profile"
+	elif [ -f "$HOME/.zshrc" ]; then
+		DETECTED_PROFILE="$HOME/.zshrc"
+	fi
 fi
 
 if [ -z $DETECTED_PROFILE ]; then
-  echo "Seems like the Hook CLI couldn't be installed.
+	echo "Seems like the Hook CLI couldn't be installed.
 
 Log:
-Profile     $DETECTED_PROFILE
-Shelltype:  $SHELLTYPE
+Profile	 $DETECTED_PROFILE
+Shelltype:	$SHELLTYPE
 
 Please report this issue with the values reported above.
 https://github.com/sitegeist/git-hooks/issues"
 
-  exit 1
+	exit 1
 else
-  echo "Installing the Hook CLI into $DETECTED_PROFILE..."
-  echo "export PATH=$PATH:`pwd/bin`" >> $DETECTED_PROFILE && source $DETECTED_PROFILE
-  echo "Success. Type in 'hook help' to get started."
-  exit 0
+	echo "Installing the Hook CLI into $DETECTED_PROFILE..."
+	echo "export PATH=$PATH:`pwd/bin`" >> $DETECTED_PROFILE && source $DETECTED_PROFILE
+	echo "Success. Type in 'hook help' to get started."
+	exit 0
 fi

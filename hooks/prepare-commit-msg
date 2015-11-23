@@ -12,8 +12,8 @@ GIT_INTERNAL_MESSAGES=("Merge ")
 #
 beginsWithAny() {
 	local e
-  for e in "${@:2}"; do grep -q -E "^$e"  <<< $1 && return 0; done
-  return 1
+	for e in "${@:2}"; do grep -q -E "^$e"  <<< $1 && return 0; done
+	return 1
 }
 
 #

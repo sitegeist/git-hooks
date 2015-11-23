@@ -4,9 +4,9 @@
 # A helper function which tests if a file is a symbolic link.
 #
 isFileSymlink() {
-  if [ -L "$1" ]; then
-    return 0
-  else
-    return 1
-  fi
+	if [ -L "$1" ]; then
+		return 0
+	else
+		return 1
+	fi
 }
