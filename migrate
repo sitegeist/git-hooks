@@ -1,0 +1,50 @@
+#!/bin/sh
+
+#
+# Migration script which should automatically update the
+# users PATH to the new binary location.
+#
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SHELLTYPE="$(basename /$SHELL)"
+
+if [ $SHELLTYPE = "bash" ]; then
+	if [ -f "$HOME/.bashrc" ]; then
+		DETECTED_PROFILE="$HOME/.bashrc"
+	elif [ -f "$HOME/.bash_profile" ]; then
+		DETECTED_PROFILE="$HOME/.bash_profile"
+	fi
+	elif [ $SHELLTYPE = "zsh" ]; then
+		DETECTED_PROFILE="$HOME/.zshrc"
+fi
+
+if [ -z $DETECTED_PROFILE ]; then
+	if [ -f "$PROFILE" ]; then
+		DETECTED_PROFILE="$PROFILE"
+	elif [ -f "$HOME/.profile" ]; then
+		DETECTED_PROFILE="$HOME/.profile"
+	elif [ -f "$HOME/.bashrc" ]; then
+		DETECTED_PROFILE="$HOME/.bashrc"
+	elif [ -f "$HOME/.bash_profile" ]; then
+		DETECTED_PROFILE="$HOME/.bash_profile"
+	elif [ -f "$HOME/.zshrc" ]; then
+		DETECTED_PROFILE="$HOME/.zshrc"
+	fi
+fi
+
+#
+# Test if a migration is necessary.
+#
+if grep -q "$HOOK_DIR/bin" "$DETECTED_PROFILE"; then
+	echo "No migration necessary, aborting..."
+else
+	cat $DETECTED_PROFILE | while read LINE
+	do
+		LINE="${LINE/$HOOK_DIR/$HOOK_DIR/bin}"
+
+		echo "$LINE" >> "$HOME/.temp_profile"
+	done
+
+	rm $DETECTED_PROFILE && mv "$HOME/.temp_profile" $DETECTED_PROFILE
+
+	echo "Migration successful. Type in 'hook help' to test the availability of the Hook CLI."
+fi

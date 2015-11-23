@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#
+# Migration file for older installations, do not update/remove this file.
+# All users which have linked their path to the old binary, should get a warning instead.
+#
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+echo "The 'Hook CLI' has moved into '$HOOK_DIR/bin/hook', please update your PATH.
+
+We've provided an migration script, which should update your PATH automatically.
+
+Execute it via '$HOOK_DIR/migrate'"
+
+exit 1
