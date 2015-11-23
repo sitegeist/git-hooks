@@ -5,7 +5,7 @@ before_script:
   - git clone https://github.com/sitegeist/git-hooks.git $HOME/.sitegeist-hooks
   - cd $HOME/.sitegeist-hooks
   - ./install
-  - export PATH=$PATH:$HOME/.sitegeist-hooks
+  - export PATH=$PATH:$HOME/.sitegeist-hooks/bin
   - cd $TRAVIS_BUILD_DIR
   - mkdir "test_working_dir"
 script:
