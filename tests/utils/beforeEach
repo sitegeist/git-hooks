@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#
+# A helper function which cleans up the testing working directory.
+#
+beforeEach() {
+	cd "test_working_dir" && rm -rf .git && git init > /dev/null
+}

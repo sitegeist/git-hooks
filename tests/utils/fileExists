@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#
+# A helper function which tests if a file exists.
+#
+fileExists() {
+	if [ -f $1 ]; then
+		return 0
+	else
+		return 1
+	fi
+}

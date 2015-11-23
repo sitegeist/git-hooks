@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#
+# A helper function which returns to the base directory.
+# Should be ran after executing your test statements.
+#
+afterEach() {
+	cd ".."
+}

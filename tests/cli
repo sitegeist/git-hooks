@@ -1,33 +1,11 @@
 #!/bin/bash
 
-#
-# Helper functions to run before and after tests.
-#
-beforeEach() {
-  cd "test_working_dir" && rm -rf .git && git init > /dev/null
-}
-afterEach() {
-  cd ".."
-}
+BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-#
-# Helper function to test if a file exists, returns 1 if no file is found.
-#
-fileExists() {
-  if [ -f $1 ]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
-isFileSymlink() {
-  if [ -L "$1" ]; then
-    return 0
-  else
-    return 1
-  fi
-}
+source $BASE_DIR/utils/afterEach
+source $BASE_DIR/utils/beforeEach
+source $BASE_DIR/utils/fileExists
+source $BASE_DIR/utils/isFileSymlink
 
 #
 # Tests for an invalid argument
