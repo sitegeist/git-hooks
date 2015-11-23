@@ -1,11 +1,11 @@
 #!/bin/bash
 
-BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-source $BASE_DIR/utils/afterEach
-source $BASE_DIR/utils/beforeEach
-source $BASE_DIR/utils/fileExists
-source $BASE_DIR/utils/isFileSymlink
+source $SCRIPT_DIR/../utils/afterEach
+source $SCRIPT_DIR/../utils/beforeEach
+source $SCRIPT_DIR/../utils/fileExists
+source $SCRIPT_DIR/../utils/isFileSymlink
 
 #
 # Tests for an invalid argument

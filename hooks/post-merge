@@ -1,27 +1,23 @@
 #!/bin/sh
-# MIT © Sindre Sorhus - sindresorhus.com
 
+HOOK_DIR="$HOME/.sitegeist-hooks"
 CHANGED_FILES="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
-#
-# Helper function which runs the second argument if any of the passed file-patterns return a result.
-#
-check_run() {
-	if grep -q -E $1  <<< $CHANGED_FILES
-	then
-		eval "$2"
-	fi
-}
+source $HOOK_DIR/utils/stringIncludes
 
 #
 # If a `package.json` or `npm-shrinkwrap.json` file has been changed, execute `npm install` and `npm prune`.
 #
-check_run 'package.json|npm-shrinkwrap.json' "npm install && npm prune"
+if stringIncludes $CHANGED_FILES 'package.json|npm-shrinkwrap.json'; then
+	eval "npm prune && npm install"
+fi
 
 #
 # If the `composer.json` or `composer.lock` file has been changed, execute `composer install`.
 #
-check_run 'composer.json|composer.lock' "composer install"
+if stringIncludes $CHANGED_FILES 'composer.json|composer.lock'; then
+	eval "composer install"
+fi
 
 #
 # Note: No exit code, this should bubble up from the respective install commands.
