@@ -1,1 +1,3 @@
 .last_modified
+test_working_dir/
+tests/output/*.result.txt

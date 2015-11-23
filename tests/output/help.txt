@@ -1,0 +1,11 @@
+[1mHook CLI.(B[m
+
+[4mGeneral Usage:[24m
+'cd' into your target directory which contains your local '.git/' repository and run 'hook'.
+
+[4mList of all available commands:[24m
+help		Prints the general CLI usage.
+help:hooks	Prints info about all hooks.
+self-update	Update all hooks which where installed via the CLI.
+
+Need help or got an issue? Report bugs at [4mhttps://github.com/sitegeist/git-hooks/issues[24m.
