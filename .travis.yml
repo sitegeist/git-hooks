@@ -1,6 +1,6 @@
 sudo: required
 before_install:
-  - apt-get install shunit2
+  - sudo apt-get install shunit2
 before_script:
   - git clone https://github.com/sitegeist/git-hooks.git $HOME/.sitegeist-hooks
   - cd $HOME/.sitegeist-hooks
