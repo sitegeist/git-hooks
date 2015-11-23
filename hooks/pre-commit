@@ -1,21 +1,14 @@
 #!/bin/sh
 
+WORKING_DIR=$(git rev-parse --show-toplevel)
+CHANGED_JS_FILES=$(git diff --cached --name-only -- '*.js')
+
 #
 # Decorative log helpers.
 #
 p_fail () {
 	printf "[\033[0;31mFAIL\033[0m] $1\n"
 }
-
-#
-# Get the root path of the git repository.
-#
-WORKING_DIR=$(git rev-parse --show-toplevel)
-
-#
-# Patterns we need later on for grep and other commands.
-#
-CHANGED_JS_FILES=$(git diff --cached --name-only -- '*.js')
 
 #
 # Check for changes in JavaScript files, and run the configured linter against them.

@@ -3,6 +3,9 @@
 
 CHANGED_FILES="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
+#
+# Helper function which runs the second argument if any of the passed file-patterns return a result.
+#
 check_run() {
 	if grep -q -E $1  <<< $CHANGED_FILES
 	then
