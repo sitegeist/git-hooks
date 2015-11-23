@@ -118,15 +118,15 @@ fi
 #
 if test `find "$BASE_DIR/.last_modified" -mmin +43200`
 then
-    update__hooks
+	update__hooks
 fi
 
 #
 # Depending on the passed argument, either print the usage guidelines, update the hooks or install them.
 #
 if [ $# -eq 0 ]
-  then
-    install_hooks
+	then
+		install_hooks
 	else
 		case "$1" in
 			"--help" | "-h" | "help")
