@@ -5,7 +5,7 @@
 # MIT © Sindre Sorhus - sindresorhus.com
 #
 stringIncludes() {
-	if grep -q -E $1  <<< $CHANGED_FILES
+	if grep -q -E $2  <<< $1
 	then
 		return 0
 	else
