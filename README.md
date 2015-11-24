@@ -34,7 +34,7 @@ Lints all `.js` files via [pipe](https://github.com/pipelinejs/pipe) if the dire
 If the lint process exits with an error code, the commit will be aborted, until you fix the errors.
 
 #### post-merge
-If the `package.json`, `npm-shrinkwrap.json`, `composer.json` or the `composer.lock` has been changed in the upstream,
+If the `package.json` or `composer.json` has been changed in the upstream,
 this hook will automatically run either `npm prune && npm update` or `composer install` so your local dependencies match the current checked out HEAD.
 
 #### prepare-commit-msg

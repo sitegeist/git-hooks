@@ -5,18 +5,26 @@ CHANGED_FILES="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
 source $HOOK_DIR/utils/stringIncludes
 
+updateNodeDependencies() {
+	npm prune && npm install
+}
+updateComposerDependencies() {
+	composer install
+}
+
+
 #
-# If a `package.json` or `npm-shrinkwrap.json` file has been changed, execute `npm install` and `npm prune`.
+# If a `package.json` file has been changed, execute `npm install` and `npm prune`.
 #
-if stringIncludes $CHANGED_FILES 'package.json|npm-shrinkwrap.json'; then
-	eval "npm prune && npm install"
+if stringIncludes $CHANGED_FILES 'package.json'; then
+	updateNodeDependencies
 fi
 
 #
-# If the `composer.json` or `composer.lock` file has been changed, execute `composer install`.
+# If a `composer.json` file has been changed, execute `composer install`.
 #
-if stringIncludes $CHANGED_FILES 'composer.json|composer.lock'; then
-	eval "composer install"
+if stringIncludes $CHANGED_FILES 'composer.json'; then
+	updateComposerDependencies
 fi
 
 #

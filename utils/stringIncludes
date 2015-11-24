@@ -1,14 +1,15 @@
 #!/bin/bash
 
 #
-# Helper function which runs the second argument if any of the passed file-patterns return a result.
-# MIT © Sindre Sorhus - sindresorhus.com
+# A helper function which returns 0|1 if a string contains the second parameter.
 #
 stringIncludes() {
-	if grep -q -E $2  <<< $1
-	then
-		return 0
-	else
-		return 1
-	fi
+    string="$1"
+    substring="$2"
+    if test "${string#*$substring}" != "$string"
+    then
+        return 0    # $substring is in $string
+    else
+        return 1    # $substring is not in $string
+    fi
 }
