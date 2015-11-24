@@ -12,7 +12,6 @@ updateComposerDependencies() {
 	composer install
 }
 
-
 #
 # If a `package.json` file has been changed, execute `npm install` and `npm prune`.
 #
