@@ -1,4 +1,5 @@
 sudo: required
+language: bash
 notifications:
   email: false
 before_install:
