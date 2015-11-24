@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 HOOK_DIR="$HOME/.sitegeist-hooks"
 CHANGED_FILES="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 WORKING_DIR=$(git rev-parse --show-toplevel)
 CHANGED_JS_FILES=$(git diff --cached --name-only -- '*.js')
