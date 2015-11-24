@@ -3,9 +3,9 @@
 WORKING_DIR=$(git rev-parse --show-toplevel)
 COMMIT_MSG_FILE="$WORKING_DIR/$1"
 COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
+GIT_INTERNAL_MESSAGES=("Merge ")
 PRIMARY_TAGS=("\[FEATURE\] " "\[TASK\] " "\[BUGFIX\] " "\[DOCS\] " "\[CLEANUP\] ")
 SECONDARY_TAGS=("\[!!!\]" "\[WIP\]")
-GIT_INTERNAL_MESSAGES=("Merge ")
 
 #
 # Helper function to test a string against an array.
