@@ -10,5 +10,7 @@ before_script:
   - export PATH=$PATH:$HOME/.sitegeist-hooks/bin
   - cd $TRAVIS_BUILD_DIR
   - mkdir "test_working_dir"
+  - git config --global user.email "ci@sitegeist.de"
+  - git config --global user.name "Sitegeist CI"
 script:
   - ./runTests
