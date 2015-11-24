@@ -46,5 +46,5 @@ else
 
 	rm $DETECTED_PROFILE && mv "$HOME/.temp_profile" $DETECTED_PROFILE
 
-	echo "Migration successful. Type in 'hook help' to test the availability of the Hook CLI."
+	echo "Migration successful. Restart your bash session and execute 'hook help' to test the availability of the Hook CLI."
 fi
