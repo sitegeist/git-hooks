@@ -4,12 +4,12 @@
 # A helper function which returns 0|1 if a string contains the second parameter.
 #
 stringIncludes() {
-    string="$1"
-    substring="$2"
-    if test "${string#*$substring}" != "$string"
-    then
-        return 0    # $substring is in $string
-    else
-        return 1    # $substring is not in $string
-    fi
+	string="$1"
+	substring="$2"
+
+	if [ "${string/$substring}" = "$string" ] ; then
+		return 1
+	else
+		return 0
+	fi
 }
