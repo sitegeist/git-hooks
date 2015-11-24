@@ -35,7 +35,7 @@ If the lint process exits with an error code, the commit will be aborted, until 
 
 #### post-merge
 If the `package.json`, `npm-shrinkwrap.json`, `composer.json` or the `composer.lock` has been changed in the upstream,
-this hook will automatically run either `npm update && npm prune` or `composer install` so your local dependencies match the current checked out HEAD.
+this hook will automatically run either `npm prune && npm update` or `composer install` so your local dependencies match the current checked out HEAD.
 
 #### prepare-commit-msg
 Evaluates the commit message against the [TYPO3 Commit guidelines](#guidelines).
