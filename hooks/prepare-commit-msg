@@ -53,14 +53,20 @@ appendIssueNumberToCommitMessage() {
 				printf "\n\nrefs #$ISSUE_NUMBER" >> "$COMMIT_MSG_FILE"
 			fi
 	fi
-
-	exit 0
 }
 
 #
-# If the git commit is an internal git commit (f.e. a merge commit), exit with 0.
+# If the git commit is an internal git commit (f.e. a merge commit), let the commit succeed.
 #
 if beginsWithAny "$COMMIT_MSG" "${GIT_INTERNAL_MESSAGES[@]}"; then
+	exit 0
+fi
+
+#
+# If the repository is f.e. in an ongoing rebase process,
+# exit with code 0 since the user can't commit in this state anyway.
+#
+if [ $(git rev-parse --abbrev-ref HEAD) == "HEAD" ]; then
 	exit 0
 fi
 
@@ -69,6 +75,8 @@ fi
 #
 if beginsWithAny "$COMMIT_MSG" "${PRIMARY_TAGS[@]}"; then
 		appendIssueNumberToCommitMessage
+
+		exit 0
 
 #
 # If nor primary tag was found, search for secondary prefix tags
@@ -83,25 +91,14 @@ elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}"; then
 		#
 		if beginsWithAny "$COMMIT_MSG_WO_SECONDARY" "${PRIMARY_TAGS[@]}"; then
 			appendIssueNumberToCommitMessage
-		else
-			commitMessageGuide
+
+			exit 0
 		fi
-
-#
-# If the repository is f.e. in an ongoing rebase process,
-# exit with code 0 since the user can't commit in this state anyway.
-#
-elif [ $(git rev-parse --abbrev-ref HEAD) == "HEAD" ]; then
-	exit 0
-
-#
-# If no prefix tag, nor primary and secondary was found, throw an error
-#
-else
-	commitMessageGuide
 fi
 
 #
-# If the script hasn't exited with code zero yet, exit with an error code.
+# If the script hasn't exited yet, we should abort the commit and display the commit message guidelines.
 #
+commitMessageGuide
+
 exit 1
