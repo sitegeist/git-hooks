@@ -7,8 +7,8 @@ BASE_DIR="$HOME/.sitegeist-hooks"
 # Should be ran after executing your test statements.
 #
 afterEach() {
-	# Remove the git-history of the test.
-	rm -rf .git
+	# Remove the git-history and node_modules of the test working directory.
+	rm -rf .git node_modules
 
 	# Remove the test file.
 	rm test_file

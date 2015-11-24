@@ -5,7 +5,6 @@ OUTPUT_DIR="../tests/output"
 
 source $SCRIPT_DIR/../utils/afterEach
 source $SCRIPT_DIR/../utils/beforeEach
-source $SCRIPT_DIR/../utils/stringIncludes
 
 modifyTestFile() {
 	echo "test" >> test_file
