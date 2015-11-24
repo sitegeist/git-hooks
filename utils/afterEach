@@ -1,9 +1,21 @@
 #!/bin/bash
 
+BASE_DIR="$HOME/.sitegeist-hooks"
+
 #
 # A helper function which returns to the base directory.
 # Should be ran after executing your test statements.
 #
 afterEach() {
+	# Change back into the root directory.
 	cd ".."
+
+	# Delete all output result diffs.
+	OUTPUT_RESULTS=$BASE_DIR/tests/output/*.result.txt
+	for result in $OUTPUT_RESULTS
+	do
+		if [ -f "$result" ]; then
+			rm $result
+		fi
+	done
 }

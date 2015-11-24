@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+OUTPUT_DIR="../tests/output"
 
 source $SCRIPT_DIR/../utils/afterEach
 source $SCRIPT_DIR/../utils/beforeEach
@@ -79,15 +80,10 @@ testReturnCodeWithoutArguments() {
 testOutputForHelpCommand() {
 	beforeEach
 
-	cd ".."
+	hook help > "$OUTPUT_DIR/help.result.txt"
 
-	touch "tests/output/help.result.txt"
-	hook help > "tests/output/help.result.txt"
-
-	diff "tests/output/help.result.txt" "tests/output/help.txt"
+	diff "$OUTPUT_DIR/help.result.txt" "$OUTPUT_DIR/help.txt"
 	assertEquals "Hook CLI should output a instructional guide if ran with the 'help' argument." 0 $?
-
-	cd "test_working_dir"
 
 	afterEach
 }
@@ -108,15 +104,10 @@ testReturnCodeForHelpCommand() {
 testOutputForHelpHooksCommand() {
 	beforeEach
 
-	cd ".."
+	hook help:hooks > "$OUTPUT_DIR/help_hooks.result.txt"
 
-	touch "tests/output/help_hooks.result.txt"
-	hook help:hooks > "tests/output/help_hooks.result.txt"
-
-	diff "tests/output/help_hooks.result.txt" "tests/output/help_hooks.txt"
+	diff "$OUTPUT_DIR/help_hooks.result.txt" "$OUTPUT_DIR/help_hooks.txt"
 	assertEquals "Hook CLI should output a instructional guide if ran with the 'help:hooks' argument." 0 $?
-
-	cd "test_working_dir"
 
 	afterEach
 }

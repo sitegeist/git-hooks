@@ -4,5 +4,11 @@
 # A helper function which cleans up the testing working directory.
 #
 beforeEach() {
+	#
+	# Create placeholders for the CLI output tests.
+	#
+	touch "tests/output/help.result.txt"
+	touch "tests/output/help_hooks.result.txt"
+
 	cd "test_working_dir" && rm -rf .git && git init > /dev/null
 }
