@@ -1,0 +1,14 @@
+#!/bin/sh
+
+BASE_DIR="$HOME/.sitegeist-hooks"
+SPECS=$BASE_DIR/tests/*
+
+#
+# Runs all tests which are located in the tests/ directory.
+#
+for spec in $SPECS
+do
+	if [ -f "$spec" ]; then
+		$spec
+	fi
+done
