@@ -9,6 +9,10 @@ beforeEach() {
 	#
 	touch "tests/output/help.result.txt"
 	touch "tests/output/help_hooks.result.txt"
+	touch "tests/output/prepare-commit-msg.result.txt"
 
-	cd "test_working_dir" && rm -rf .git && git init > /dev/null
+	cd "test_working_dir" && git init > /dev/null
+
+	# Create and commit a test.
+	touch test_file && git add test_file && git commit -m "Initial commit" > /dev/null
 }

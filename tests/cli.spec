@@ -15,7 +15,7 @@ testReturnCodeForInvalidCommand() {
 	beforeEach
 
 	hook invalid_argument > /dev/null
-	assertEquals "Hook CLI should return a failure code if ran with an invalid argument." 1 $?
+	assertEquals "The Hook CLI should return a failure code if ran with an invalid argument." 1 $?
 
 	afterEach
 }
@@ -69,7 +69,7 @@ testReturnCodeWithoutArguments() {
 
 	hook > /dev/null
 	returnCode=$?
-	assertEquals "Hook CLI should return a success code if ran without arguments." 0 $returnCode
+	assertEquals "The Hook CLI should return a success code if ran without arguments." 0 $returnCode
 
 	afterEach
 }
@@ -83,7 +83,7 @@ testOutputForHelpCommand() {
 	hook help > "$OUTPUT_DIR/help.result.txt"
 
 	diff "$OUTPUT_DIR/help.result.txt" "$OUTPUT_DIR/help.txt"
-	assertEquals "Hook CLI should output a instructional guide if ran with the 'help' argument." 0 $?
+	assertEquals "The Hook CLI should output a instructional guide if ran with the 'help' argument." 0 $?
 
 	afterEach
 }
@@ -93,7 +93,7 @@ testReturnCodeForHelpCommand() {
 
 	hook help > /dev/null
 	returnCode=$?
-	assertEquals "Hook CLI should return a success code if ran with the 'help' argument." 0 $returnCode
+	assertEquals "The Hook CLI should return a success code if ran with the 'help' argument." 0 $returnCode
 
 	afterEach
 }
@@ -107,7 +107,7 @@ testOutputForHelpHooksCommand() {
 	hook help:hooks > "$OUTPUT_DIR/help_hooks.result.txt"
 
 	diff "$OUTPUT_DIR/help_hooks.result.txt" "$OUTPUT_DIR/help_hooks.txt"
-	assertEquals "Hook CLI should output a instructional guide if ran with the 'help:hooks' argument." 0 $?
+	assertEquals "The Hook CLI should output a instructional guide if ran with the 'help:hooks' argument." 0 $?
 
 	afterEach
 }
@@ -117,7 +117,7 @@ testReturnCodeForHelpHooksCommand() {
 
 	hook help:hooks > /dev/null
 	returnCode=$?
-	assertEquals "Hook CLI should return a success code if ran with the 'help:hooks' argument." 0 $returnCode
+	assertEquals "The Hook CLI should return a success code if ran with the 'help:hooks' argument." 0 $returnCode
 
 	afterEach
 }
@@ -130,11 +130,10 @@ testReturnCodeForSelfUpdateCommand() {
 
 	hook help self-update > /dev/null
 	returnCode=$?
-	assertEquals "Hook CLI should return a success code if ran with the 'self-update' argument." 0 $returnCode
+	assertEquals "The Hook CLI should return a success code if ran with the 'self-update' argument." 0 $returnCode
 
 	afterEach
 }
-
 
 #
 # Finally, run all tests.
