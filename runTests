@@ -1,7 +1,7 @@
 #!/bin/sh
 
 BASE_DIR="$HOME/.sitegeist-hooks"
-SPECS=$BASE_DIR/tests/*
+SPECS=$BASE_DIR/tests/*.spec
 
 #
 # Runs all tests which are located in the tests/ directory.
