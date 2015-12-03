@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
 
+#
+# Post-Merge hook
+# Responsible for updating the respective dependencies if a certain
+# meta file has been changed in the downstream.
+#
+# Author: Tyll Weiß <weiss@sitegeist.de>
+#
 HOOK_DIR="$HOME/.sitegeist-hooks"
 CHANGED_FILES="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
+#
+# Include helper utils.
+#
 source $HOOK_DIR/utils/stringIncludes
 
+#
+# Helper functions which are responsible for updating the dependencies.
+#
 updateNodeDependencies() {
 	npm prune && npm install
 }

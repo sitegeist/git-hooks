@@ -1,7 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
 # A helper function which tests if a file exists.
+#
+# Author: Tyll Weiß <weiss@sitegeist.de>
 #
 fileExists() {
 	if [ -f $1 ]; then

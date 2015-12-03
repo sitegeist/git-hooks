@@ -4,6 +4,8 @@
 # Migration script which should automatically update the
 # users PATH to the new binary location.
 #
+# Author: Tyll Weiß <weiss@sitegeist.de>
+#
 HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SHELLTYPE="$(basename /$SHELL)"
 

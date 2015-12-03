@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+#
+# Prepare-Commit-Msg hook
+# Responsible for testing the commit message against the TYPO3 guidelines.
+#
+# Author: Tyll Weiß <weiss@sitegeist.de>
+#
+HOOK_DIR="$HOME/.sitegeist-hooks"
 WORKING_DIR=$(git rev-parse --show-toplevel)
 COMMIT_MSG_FILE="$WORKING_DIR/$1"
 COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
@@ -8,13 +15,9 @@ PRIMARY_TAGS=("\[FEATURE\] " "\[TASK\] " "\[BUGFIX\] " "\[DOCS\] " "\[CLEANUP\] 
 SECONDARY_TAGS=("\[!!!\]" "\[WIP\]")
 
 #
-# Helper function to test a string against an array.
+# Include helper utils.
 #
-beginsWithAny() {
-	local e
-	for e in "${@:2}"; do grep -q -E "^$e"  <<< $1 && return 0; done
-	return 1
-}
+source $HOOK_DIR/utils/beginsWithAny
 
 #
 # Logs out the error message and commit guidelines.

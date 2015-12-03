@@ -1,9 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+#
+# Tests for the post-merge hook.
+#
+# Author: Tyll Weiß <weiss@sitegeist.de>
+#
+HOOK_DIR="$HOME/.sitegeist-hooks"
+TEST_WORKING_DIR="$BASE_DIR/test_working_dir"
 
-source $SCRIPT_DIR/../utils/afterEach
-source $SCRIPT_DIR/../utils/beforeEach
+source $HOOK_DIR/utils/afterEach
+source $HOOK_DIR/utils/beforeEach
 
 #
 # Tests for the automatic update mechanism of node dependencies.
@@ -33,7 +39,7 @@ testAutomaticUpdateOfNodeDependenciesWithChanges() {
 	git checkout master --quiet
 	git merge updateNodeDependencies > /dev/null 2>&1
 
-	DEPENDENCIES=$(ls node_modules)
+	DEPENDENCIES=$(ls $TEST_WORKING_DIR/node_modules)
 	assertNotNull "$DEPENDENCIES"
 
 	afterEach
@@ -54,7 +60,7 @@ testAutomaticUpdateOfNodeDependenciesWithoutChanges() {
 	git checkout master --quiet
 	git merge anotherBranch > /dev/null 2>&1
 
-	DEPENDENCIES=$(ls node_modules)
+	DEPENDENCIES=$(ls $TEST_WORKING_DIR/node_modules)
 	assertNull "$DEPENDENCIES"
 
 	afterEach

@@ -1,17 +1,25 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
-# A helper function which cleans up the testing working directory.
+# A helper function which creates the testing working directory.
 #
+# Author: Tyll Weiß <weiss@sitegeist.de>
+#
+BASE_DIR="$HOME/.sitegeist-hooks"
+TEST_WORKING_DIR="$BASE_DIR/test_working_dir"
+
 beforeEach() {
+	# Remove the git-history and node_modules of the test working directory.
+	rm -rf $TEST_WORKING_DIR
+
 	#
 	# Create placeholders for the CLI output tests.
 	#
-	touch "tests/output/help.result.txt"
-	touch "tests/output/help_hooks.result.txt"
-	touch "tests/output/prepare-commit-msg.result.txt"
+	touch "$BASE_DIR/tests/output/help.result.txt"
+	touch "$BASE_DIR/tests/output/help_hooks.result.txt"
+	touch "$BASE_DIR/tests/output/prepare-commit-msg.result.txt"
 
-	cd "test_working_dir" && git init > /dev/null
+	mkdir $TEST_WORKING_DIR && cd "$TEST_WORKING_DIR" && git init > /dev/null
 
 	# Create and commit a test.
 	touch test_file && git add test_file && git commit -m "Initial commit" > /dev/null

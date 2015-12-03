@@ -1,5 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
+#
+# Tests for the hook CLI.
+#
+# Author: Tyll Weiß <weiss@sitegeist.de>
+#
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OUTPUT_DIR="../tests/output"
 

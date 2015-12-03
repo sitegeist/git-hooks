@@ -1,14 +1,19 @@
 #!/usr/bin/env bash
 
+#
+# Pre-Commit hook
+# Responsible for linting the changed files.
+#
+# Author: Tyll Weiß <weiss@sitegeist.de>
+#
+HOOK_DIR="$HOME/.sitegeist-hooks"
 WORKING_DIR=$(git rev-parse --show-toplevel)
 CHANGED_JS_FILES=$(git diff --cached --name-only -- '*.js')
 
 #
-# Decorative log helpers.
+# Include helper utils.
 #
-p_fail () {
-	printf "[\033[0;31mFAIL\033[0m] $1\n"
-}
+source $HOOK_DIR/utils/typography
 
 #
 # Check for changes in JavaScript files, and run the configured linter against them.

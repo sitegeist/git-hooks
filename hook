@@ -4,7 +4,9 @@
 # Migration file for older installations, do not update/remove this file.
 # All users which have linked their path to the old binary, should get a warning instead.
 #
-HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Author: Tyll Weiß <weiss@sitegeist.de>
+#
+HOOK_DIR="$HOME/.sitegeist-hooks"
 
 echo "The 'Hook CLI' has moved into '$HOOK_DIR/bin/hook', please update your PATH.
 

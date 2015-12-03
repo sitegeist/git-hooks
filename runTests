@@ -1,11 +1,13 @@
 #!/bin/sh
 
-BASE_DIR="$HOME/.sitegeist-hooks"
-SPECS=$BASE_DIR/tests/*.spec
-
 #
 # Runs all tests which are located in the tests/ directory.
 #
+# Author: Tyll Weiß <weiss@sitegeist.de>
+#
+BASE_DIR="$HOME/.sitegeist-hooks"
+SPECS=$BASE_DIR/tests/*.spec
+
 for spec in $SPECS
 do
 	if [ -f "$spec" ]; then

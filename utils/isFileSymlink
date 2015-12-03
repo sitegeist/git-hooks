@@ -1,7 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
 # A helper function which tests if a file is a symbolic link.
+#
+# Author: Tyll Weiß <weiss@sitegeist.de>
 #
 isFileSymlink() {
 	if [ -L "$1" ]; then
