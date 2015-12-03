@@ -33,7 +33,7 @@ installLinters() {
 # Sets up the extended hook.
 #
 setupHookExtension() {
-	echo 'extended:' >> .hook.yml
+	echo 'extend:' >> .hook.yml
 	echo '  pre_commit: hookExtensions/pre-commit' >> .hook.yml
 
 	mkdir hookExtensions

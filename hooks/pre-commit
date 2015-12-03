@@ -74,7 +74,7 @@ fi
 #
 if fileExists $CONFIG_PATH; then
 	eval $(parseYaml $CONFIG_PATH "CONFIG_")
-	executeHookExtension "pre-commit" $CONFIG_extended_pre_commit $@
+	executeHookExtension "pre-commit" $CONFIG_extend_pre_commit $@
 fi
 
 

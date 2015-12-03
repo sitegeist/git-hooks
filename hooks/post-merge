@@ -51,6 +51,6 @@ fi
 #
 # Support for additional project specific hooks.
 #
-executeHookExtension "post-merge" $CONFIG_extended_post_merge $@
+executeHookExtension "post-merge" $CONFIG_extend_post_merge $@
 
 exit 0

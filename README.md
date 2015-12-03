@@ -71,7 +71,7 @@ so your hook extension acts like a standalone hook which is traditionally placed
 
 An example `.hook.yml`.
 ```yaml
-extended:
+extend:
   pre_commit: Build/hooks/pre-commit
   post_merge: Build/hooks/post-merge
   prepare_commit_msg: Build/hooks/prepare-commit-msg
