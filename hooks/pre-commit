@@ -20,19 +20,25 @@ source $HOOK_DIR/utils/typography
 #
 if [ ! -z "$CHANGED_JS_FILES" ]; then
 	# Check for an existing pipe instance beforehand.
-	if [ -f "$WORKING_DIR/Pipefile.js" ] || [ -f "$WORKING_DIR/pipefile.js" ]; then
-		echo "Hook CLI: Found changes in JavaScript files. Linting via the pipe task-runner..."
-		pipe lint:scripts
+	echo "Hook CLI: Found changes in JavaScript files. Linting via the local 'xo' binary..."
+
+	if [ -f "$WORKING_DIR/node_modules/.bin/xo" ]; then
+		node $WORKING_DIR/node_modules/.bin/xo $CHANGED_JS_FILES
+	else
+		echo "Hook CLI: No local 'xo' binary found."
 	fi
 fi
 lintResults=$?
 
 #
-# Exit with an error code if the linter has found errors.
-# ToDo: Additional feedback for the developer
+# Exit with an error code if one of the linters has found errors.
 #
 if [ $lintResults -ne 0 ]; then
-	p_fail "Something went wrong while linting the changed files. Fix the errors and commit again."
+	p_fail "Something went wrong while linting the changed files.
+       Fix the errors and commit again.
+
+       If you think the linter is not intended to throw an error exit code,
+       please contact the owner of the repository."
 
 	exit 1
 fi

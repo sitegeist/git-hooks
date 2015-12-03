@@ -30,7 +30,7 @@ In that case, just run `self-update` once and all hooks which you've installed v
 
 ## Available git-hooks
 #### pre-commit
-Lints all `.js` files via [pipe](https://github.com/pipelinejs/pipe) if the directory contains a `Pipefile.js` (Gulp & Grunt support coming soon.).
+Lints all changed `.js` files via [xo](https://github.com/sindresorhus/xo) if the directory contains a local `xo` binary.
 If the lint process exits with an error code, the commit will be aborted, until you fix the errors.
 
 #### post-merge
