@@ -12,5 +12,8 @@ for spec in $SPECS
 do
 	if [ -f "$spec" ]; then
 		$spec
+		if [ $? -ne 0 ]; then
+			exit 1
+		fi
 	fi
 done
