@@ -9,6 +9,7 @@
 HOOK_DIR="$HOME/.sitegeist-hooks"
 WORKING_DIR=$(git rev-parse --show-toplevel)
 CHANGED_JS_FILES=$(git diff --cached --name-only -- '*.js')
+CHANGED_PACKAGE_JSON=$(git diff --cached --name-only -- 'package.json')
 
 #
 # Include helper utils.
@@ -19,7 +20,6 @@ source $HOOK_DIR/utils/typography
 # Check for changes in JavaScript files, and run the configured linter against them.
 #
 if [ ! -z "$CHANGED_JS_FILES" ]; then
-	# Check for an existing pipe instance beforehand.
 	echo "Hook CLI: Found changes in JavaScript files. Linting via the local 'xo' binary..."
 
 	if [ -f "$WORKING_DIR/node_modules/.bin/xo" ]; then
@@ -39,6 +39,28 @@ if [ $lintResults -ne 0 ]; then
 
        If you think the linter is not intended to throw an error exit code,
        please contact the owner of the repository."
+
+	exit 1
+fi
+
+#
+# Generate/Update the npm-shrinkwrap.json file, if a package.json file has been changed.
+#
+if [ ! -z "$CHANGED_PACKAGE_JSON" ]; then
+	echo "Hook CLI: Seems like you've changed a 'pacakge.json' file, creating/updating a 'npm-shrinkwrap.json' for consistent dependencies..."
+
+	npm shrinkwrap
+	git add npm-shrinkwrap.json
+fi
+generateResults=$?
+
+#
+# Exit with an error code if one of the linters has found errors.
+#
+if [ $generateResults -ne 0 ]; then
+	p_fail "Seems like something went wrong while creating the npm-shrinkwrap file.
+
+       If this error is thrown falsely, please open a issue at ${underline}https://github.com/sitegeist/git-hooks/issues${nounderline}."
 
 	exit 1
 fi

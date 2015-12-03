@@ -10,6 +10,7 @@ TEST_WORKING_DIR="$BASE_DIR/test_working_dir"
 
 source $HOOK_DIR/utils/afterEach
 source $HOOK_DIR/utils/beforeEach
+source $HOOK_DIR/utils/fileExists
 
 #
 # Sets up the test directory
@@ -81,6 +82,31 @@ testCommitWithValidJavaScriptChanges() {
 	git add test.js
 	git commit -m "[TASK] Add a test js file." > /dev/null 2>&1
 	assertEquals "The pre-commit hook should exit with an success code if no errors are found within the changed .js files." 0 $?
+
+	afterEach
+}
+
+testCreationOfNpmShrinkwrapFile() {
+	beforeEach
+
+	hook install > /dev/null
+
+	echo '{
+	"name": "test_working_dir",
+	"version": "0.0.1",
+	"description": "",
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"page": "*"
+	}
+}' > package.json
+	git add package.json
+	git commit -m "[TASK] Add a npm dependency." > /dev/null 2>&1
+
+	fileExists "$TEST_WORKING_DIR/npm-shrinkwrap.json"
+	returnCode=$?
+	assertEquals "The npm-shrinkwrap file should be created." 1 $returnCode
 
 	afterEach
 }
