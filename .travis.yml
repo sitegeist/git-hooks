@@ -1,9 +1,10 @@
-sudo: required
 language: bash
 notifications:
   email: false
-before_install:
-  - sudo apt-get install shunit2
+addons:
+  apt:
+    packages:
+    - shunit2
 before_script:
   - git clone https://github.com/sitegeist/git-hooks.git $HOME/.sitegeist-hooks
   - cd $HOME/.sitegeist-hooks
