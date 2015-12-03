@@ -34,7 +34,7 @@ In that case, just run `self-update` once and all hooks which you've installed v
 Lints all changed `.js` files via [xo](https://github.com/sindresorhus/xo) if the directory contains a local `xo` binary.
 If the lint process exits with an error code, the commit will be aborted, until you fix the errors.
 
-The pre-commit hook also checks if a `package.json` file is in your changeset, and will automatically create and commit a `npm-shrinkwrap.json` file for you. Note: This functionality is kind of useless if you are using `< npm@3.0.0` - [Related issue](https://github.com/npm/npm/issues/5083).
+The pre-commit hook also checks if a `package.json` file is in your changeset, and will automatically create and commit a `npm-shrinkwrap.json` file for you. *Note:* This functionality is kind of useless if you are using `> npm@3.0.0` - [Related issue](https://github.com/npm/npm/issues/5083).
 
 #### post-merge
 If the `package.json` or `composer.json` has been changed in the upstream,
