@@ -5,11 +5,11 @@
 #
 # Author: Tyll Weiß <weiss@sitegeist.de>
 #
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-OUTPUT_DIR="../tests/output"
+HOOK_DIR="$HOME/.sitegeist-hooks"
+OUTPUT_DIR="$HOOK_DIR/tests/output"
 
-source $SCRIPT_DIR/../utils/afterEach
-source $SCRIPT_DIR/../utils/beforeEach
+source $HOOK_DIR/utils/afterEach
+source $HOOK_DIR/utils/beforeEach
 
 modifyTestFile() {
 	echo "test" >> test_file
