@@ -11,14 +11,15 @@ git clone https://github.com/sitegeist/git-hooks.git $HOME/.sitegeist-hooks && c
 `cd` into your target directory which contains your local `.git/` repository and run hook.
 
 ``` bash
-hook
+hook install
 ```
 Afterwards all available hooks should be installed in your local repository.
 
 #### Commands
 | Command            | Description                                                     |
 | ------------------ | --------------------------------------------------------------- |
-| `hook`             | Installs all hooks in your current working directory.           |
+| `hook`             | Prints the usage guidelines.                                    |
+| `hook install`     | Installs all hooks in your current working directory.           |
 | `hook self-update` | Updates all installed hooks which you've installed via the CLI. |
 | `hook help`        | Prints the usage guidelines.                                    |
 | `hook help:hooks`  | Prints a list of all installed hooks.                           |

@@ -96,7 +96,9 @@ fi
 #
 if [ $# -eq 0 ]
 	then
-		install_hooks
+		print_help
+
+		exit 1
 	else
 		case "$1" in
 			"--help" | "-h" | "help")
@@ -104,6 +106,9 @@ if [ $# -eq 0 ]
 				;;
 			"help:hooks")
 				print_hook_help
+				;;
+			"install")
+				install_hooks
 				;;
 			"self-update")
 				update__hooks

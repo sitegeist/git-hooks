@@ -34,7 +34,7 @@ installLinters() {
 testCommitWithoutJavaScriptChanges() {
 	beforeEach
 
-	hook > /dev/null
+	hook install > /dev/null
 
 	# Install the linters.
 	installLinters
@@ -53,7 +53,7 @@ testCommitWithoutJavaScriptChanges() {
 testCommitWithInvalidJavaScriptChanges() {
 	beforeEach
 
-	hook > /dev/null
+	hook install > /dev/null
 
 	# Install the linters.
 	installLinters
@@ -72,7 +72,7 @@ testCommitWithInvalidJavaScriptChanges() {
 testCommitWithValidJavaScriptChanges() {
 	beforeEach
 
-	hook > /dev/null
+	hook install > /dev/null
 
 	# Install the linters.
 	installLinters

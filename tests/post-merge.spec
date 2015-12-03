@@ -17,7 +17,7 @@ source $HOOK_DIR/utils/beforeEach
 testAutomaticUpdateOfNodeDependenciesWithChanges() {
 	beforeEach
 
-	hook > /dev/null
+	hook install > /dev/null
 
 	# Commit a package.json update on another branch.
 	git checkout --quiet -b updateNodeDependencies
@@ -48,7 +48,7 @@ testAutomaticUpdateOfNodeDependenciesWithChanges() {
 testAutomaticUpdateOfNodeDependenciesWithoutChanges() {
 	beforeEach
 
-	hook > /dev/null
+	hook install > /dev/null
 
 	# Commit unrelevant changes.
 	git checkout --quiet -b anotherBranch

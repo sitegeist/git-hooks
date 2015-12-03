@@ -23,7 +23,7 @@ testOutputForCommitMessageWithoutPrimaryPrefix() {
 	beforeEach
 
 	# Install all hooks.
-	hook > /dev/null
+	hook install > /dev/null
 
 	# Commit the test file.
 	modifyTestFile
@@ -40,7 +40,7 @@ testReturnCodeForCommitMessageWithoutPrimaryPrefix() {
 	beforeEach
 
 	# Install all hooks.
-	hook > /dev/null
+	hook install > /dev/null
 
 	# Commit the test file.
 	modifyTestFile
@@ -53,7 +53,7 @@ testReturnCodeForCommitMessageWithInvalidPrefix() {
 	beforeEach
 
 	# Install all hooks.
-	hook > /dev/null
+	hook install > /dev/null
 
 	# Invalid/Custom prefix, which is not covered by the TYPO3 commit guidelines.
 	modifyTestFile
@@ -76,7 +76,7 @@ testReturnCodeForCommitMessageWithPrimaryPrefixes() {
 	beforeEach
 
 	# Install all hooks.
-	hook > /dev/null
+	hook install > /dev/null
 
 	# Test the [FEATURE] prefix.
 	modifyTestFile
@@ -109,7 +109,7 @@ testReturnCodeForCommitMessageWithInvalidSecondaryPrefixes() {
 	beforeEach
 
 	# Install all hooks.
-	hook > /dev/null
+	hook install > /dev/null
 
 	# Test the [!!!] prefix.
 	modifyTestFile
@@ -132,7 +132,7 @@ testReturnCodeForCommitMessageWithSecondaryPrefixes() {
 	beforeEach
 
 	# Install all hooks.
-	hook > /dev/null
+	hook install > /dev/null
 
 	# Test the [!!!][FEATURE] prefix.
 	modifyTestFile
@@ -165,7 +165,7 @@ testAppendedIssueNumberFromBranchName() {
 	beforeEach
 
 	# Install all hooks.
-	hook > /dev/null
+	hook install > /dev/null
 
 	# First, check if the issue number will be appended while commiting in a feature branch.
 	git checkout --quiet -b task/21993/myFeature

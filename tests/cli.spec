@@ -31,7 +31,7 @@ testReturnCodeForInvalidCommand() {
 testPresenceOfHooks() {
 	beforeEach
 
-	hook > /dev/null
+	hook install > /dev/null
 
 	#
 	# post-merge
@@ -72,7 +72,7 @@ testPresenceOfHooks() {
 testReturnCodeWithoutArguments() {
 	beforeEach
 
-	hook > /dev/null
+	hook install > /dev/null
 	returnCode=$?
 	assertEquals "The Hook CLI should return a success code if ran without arguments." 0 $returnCode
 
