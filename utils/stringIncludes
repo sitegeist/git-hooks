@@ -5,6 +5,15 @@
 #
 # Author: Tyll Weiß <weiss@sitegeist.de>
 #
+# Arguments:
+# $1 The string to check.
+# $2 The substring which should be included in the first parameter.
+#
+# Usage:
+# if stringIncludes "test" "st"; then
+#		echo "String 'test' includes substring 'st'."
+# fi
+#
 stringIncludes() {
 	string="$1"
 	substring="$2"

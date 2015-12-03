@@ -5,6 +5,14 @@
 #
 # Author: Tyll Weiß <weiss@sitegeist.de>
 #
+# Arguments:
+# $1 The filepath to check.
+#
+# Usage:
+# if fileExists "$HOME/.aliases"; then
+#		echo "File '$HOME/.aliases' exists."
+# fi
+#
 fileExists() {
 	if [ -f $1 ]; then
 		return 0

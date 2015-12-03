@@ -5,6 +5,14 @@
 #
 # Author: Tyll Weiß <weiss@sitegeist.de>
 #
+# Arguments:
+# $1 The filepath to check.
+#
+# Usage:
+# if isFileSymlink "$HOME/.aliases"; then
+#		echo "File '$HOME/.aliases' is a symbolic link."
+# fi
+#
 isFileSymlink() {
 	if [ -L "$1" ]; then
 		return 0

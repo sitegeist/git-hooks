@@ -5,6 +5,16 @@
 #
 # Author: Tyll Weiß <weiss@sitegeist.de>
 #
+# Arguments:
+# $1 The string which should be included one of the array items.
+# $2 The array containing all items which are checked against the first parameter.
+#
+# Usage:
+# MY_ARRAY=("one" "two" "three")
+# if beginsWithAny "test" "${MY_ARRAY[@]}"; then
+#		echo "string 'test' found in array."
+# fi
+#
 beginsWithAny() {
 	local e
 	for e in "${@:2}"; do grep -q -E "^$e"  <<< $1 && return 0; done
