@@ -18,7 +18,7 @@ stringIncludes() {
 	string="$1"
 	substring="$2"
 
-	if [ "${string/$substring}" = "$string" ] ; then
+	if [[ "$string" == *"$substring"* ]]; then
 		return 1
 	else
 		return 0
