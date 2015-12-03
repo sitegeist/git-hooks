@@ -73,7 +73,7 @@ An example `.hook.yml`.
 ```yaml
 extended:
   pre_commit: Build/hooks/pre-commit
-	post_merge: Build/hooks/post-merge
+  post_merge: Build/hooks/post-merge
   prepare_commit_msg: Build/hooks/prepare-commit-msg
 ```
 
