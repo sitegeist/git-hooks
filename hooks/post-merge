@@ -14,6 +14,8 @@ CHANGED_FILES="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 # Include helper utils.
 #
 source $HOOK_DIR/utils/stringIncludes
+source $HOOK_DIR/utils/executeHookExtension
+source $HOOK_DIR/utils/parseYaml
 
 #
 # Helper functions which are responsible for updating the dependencies.
@@ -24,6 +26,13 @@ updateNodeDependencies() {
 updateComposerDependencies() {
 	composer install
 }
+
+#
+# Parse the config file.
+#
+if fileExists $CONFIG_PATH; then
+	eval $(parseYaml $CONFIG_PATH "CONFIG_")
+fi
 
 #
 # If a `package.json` file has been changed, execute `npm install` and `npm prune`.
@@ -40,5 +49,8 @@ if stringIncludes $CHANGED_FILES 'composer.json'; then
 fi
 
 #
-# Note: No exit code, this should bubble up from the respective install commands.
+# Support for additional project specific hooks.
 #
+executeHookExtension "post-merge" $CONFIG_extended_post_merge $@
+
+exit 0

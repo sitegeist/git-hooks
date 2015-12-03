@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+#
+# A helper function which tests if a file exists.
+#
+# Author: Tyll Weiß <weiss@sitegeist.de>
+#
+# Arguments:
+# $1 The filepath to check.
+#
+# Usage:
+# if fileExists "$HOME/.aliases"; then
+#		echo "File '$HOME/.aliases' exists."
+# fi
+#
+fileIsExecutable() {
+	if [[ -x "$1" ]]; then
+		return 0
+	else
+		return 1
+	fi
+}

@@ -30,6 +30,18 @@ installLinters() {
 }
 
 #
+# Sets up the extended hook.
+#
+setupHookExtension() {
+	echo 'extended:' >> .hook.yml
+	echo '  pre_commit: hookExtensions/pre-commit' >> .hook.yml
+
+	mkdir hookExtensions
+	touch hookExtensions/pre-commit
+	chmod +x hookExtensions/pre-commit
+}
+
+#
 # Test if we can commit without changes to .js files.
 #
 testCommitWithoutJavaScriptChanges() {
@@ -107,6 +119,27 @@ testCreationOfNpmShrinkwrapFile() {
 	fileExists "$TEST_WORKING_DIR/npm-shrinkwrap.json"
 	returnCode=$?
 	assertEquals "The npm-shrinkwrap file should be created." 1 $returnCode
+
+	afterEach
+}
+
+testReturnCodeForFailingHookExtension() {
+	beforeEach
+
+	hook install > /dev/null
+
+	setupHookExtension
+
+	echo 'exit 1' > hookExtensions/pre-commit
+	git add hookExtensions/pre-commit .hook.yml
+	git commit -m "[TASK] Commit hook extensions." > /dev/null 2>&1
+	returnCode=$?
+	assertEquals "The pre-commit hook should exit with code 1 if the extension exits with code 1." 1 $returnCode
+
+	echo 'exit 0' > hookExtensions/pre-commit
+	git commit -m "[TASK] Commit hook extensions." > /dev/null 2>&1
+	returnCode=$?
+	assertEquals "The pre-commit hook should exit with code 0 if the extension exits with code 0." 0 $returnCode
 
 	afterEach
 }

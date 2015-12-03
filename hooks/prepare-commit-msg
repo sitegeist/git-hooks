@@ -18,6 +18,8 @@ SECONDARY_TAGS=("\[!!!\]" "\[WIP\]")
 # Include helper utils.
 #
 source $HOOK_DIR/utils/beginsWithAny
+source $HOOK_DIR/utils/executeHookExtension
+source $HOOK_DIR/utils/parseYaml
 
 #
 # Logs out the error message and commit guidelines.
@@ -59,6 +61,27 @@ appendIssueNumberToCommitMessage() {
 }
 
 #
+# Appends the feature branch ticket number to the message and lets the commit message succeed.
+#
+succeedCommitMessage() {
+	appendIssueNumberToCommitMessage
+
+	if fileExists $CONFIG_PATH; then
+		eval $(parseYaml $CONFIG_PATH "CONFIG_")
+		executeHookExtension "prepare-commit-msg" $CONFIG_extended_prepare_commit_msg $@
+	fi
+
+	exit 0
+}
+
+#
+# Parse the config file.
+#
+if fileExists $CONFIG_PATH; then
+	eval $(parseYaml $CONFIG_PATH "CONFIG_")
+fi
+
+#
 # If the git commit is an internal git commit (f.e. a merge commit), let the commit succeed.
 #
 if beginsWithAny "$COMMIT_MSG" "${GIT_INTERNAL_MESSAGES[@]}"; then
@@ -77,9 +100,7 @@ fi
 # Check if the message begins with a primary prefix tag.
 #
 if beginsWithAny "$COMMIT_MSG" "${PRIMARY_TAGS[@]}"; then
-		appendIssueNumberToCommitMessage
-
-		exit 0
+		succeedCommitMessage
 
 #
 # If nor primary tag was found, search for secondary prefix tags
@@ -93,9 +114,7 @@ elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}"; then
 		# Make sure that the secondary prefix tag is immediately followed by a primary one.
 		#
 		if beginsWithAny "$COMMIT_MSG_WO_SECONDARY" "${PRIMARY_TAGS[@]}"; then
-			appendIssueNumberToCommitMessage
-
-			exit 0
+			succeedCommitMessage
 		fi
 fi
 

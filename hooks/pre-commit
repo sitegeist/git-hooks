@@ -10,11 +10,15 @@ HOOK_DIR="$HOME/.sitegeist-hooks"
 WORKING_DIR=$(git rev-parse --show-toplevel)
 CHANGED_JS_FILES=$(git diff --cached --name-only -- '*.js')
 CHANGED_PACKAGE_JSON=$(git diff --cached --name-only -- 'package.json')
+CONFIG_PATH="$WORKING_DIR/.hook.yml"
 
 #
 # Include helper utils.
 #
 source $HOOK_DIR/utils/typography
+source $HOOK_DIR/utils/fileExists
+source $HOOK_DIR/utils/executeHookExtension
+source $HOOK_DIR/utils/parseYaml
 
 #
 # Check for changes in JavaScript files, and run the configured linter against them.
@@ -64,5 +68,14 @@ if [ $generateResults -ne 0 ]; then
 
 	exit 1
 fi
+
+#
+# Support for additional project specific hooks.
+#
+if fileExists $CONFIG_PATH; then
+	eval $(parseYaml $CONFIG_PATH "CONFIG_")
+	executeHookExtension "pre-commit" $CONFIG_extended_pre_commit $@
+fi
+
 
 exit 0

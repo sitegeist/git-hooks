@@ -58,6 +58,26 @@ The final commit message in your history will be
 refs #29381
 ```
 
+## Extending the available hooks.
+You can extend the existing hooks by creating a `.hook.yml` in your git repositories root directory.
+From there on, all paths to hook extensions are relative to this file.
+
+The hook extensions itself need to be executable, you can achieve this with `chmod +x path/to/hook/extension`.
+Each hook is immediately executed after the global hook.
+
+We expect the extension to exit with code 0.
+Also, the arguments from git which where passed to our hooks are propagated to your hook extension,
+so your hook extension acts like a standalone hook which is traditionally placed in the `.git/hooks/` directory.
+
+An example `.hook.yml`.
+```yaml
+extended:
+  pre_commit: Build/hooks/pre-commit
+	post_merge: Build/hooks/post-merge
+  prepare_commit_msg: Build/hooks/prepare-commit-msg
+```
+
+
 ## <a name="guidelines"></a> Commit message guidelines
 In short, a commit message must be prefixed with either `[FEATURE]`, `[TASK]`, `[BUGFIX]`, `[DOCS]` or `[CLEANUP]`. F.e:
 ``` bash
