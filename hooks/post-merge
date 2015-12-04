@@ -28,13 +28,6 @@ updateComposerDependencies() {
 }
 
 #
-# Parse the config file.
-#
-if fileExists $CONFIG_PATH; then
-	eval $(parseYaml $CONFIG_PATH "CONFIG_")
-fi
-
-#
 # If a `package.json` file has been changed, execute `npm install` and `npm prune`.
 #
 if stringIncludes $CHANGED_FILES 'package.json'; then
@@ -51,6 +44,9 @@ fi
 #
 # Support for additional project specific hooks.
 #
-executeHookExtension "post-merge" $CONFIG_extend_post_merge $@
+if fileExists $CONFIG_PATH; then
+	eval $(parseYaml $CONFIG_PATH "CONFIG_")
+	executeHookExtension "post-merge" $CONFIG_extend_post_merge $@
+fi
 
 exit 0

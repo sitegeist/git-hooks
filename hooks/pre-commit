@@ -77,5 +77,4 @@ if fileExists $CONFIG_PATH; then
 	executeHookExtension "pre-commit" $CONFIG_extend_pre_commit $@
 fi
 
-
 exit 0
