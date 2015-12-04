@@ -2,7 +2,7 @@
 
 source $HOOK_DIR/utils/typography
 source $HOOK_DIR/utils/fileExists
-source $HOOK_DIR/utils/fileIsExecutable
+source $HOOK_DIR/utils/isFileExecutable
 
 #
 # A helper function which executes the given hook extension.
@@ -22,7 +22,7 @@ executeHookExtension() {
 		if fileExists $2; then
 			echo "Hook CLI: Found a $1 hook extension in '$2'. Executing it now..."
 
-			if fileIsExecutable $2; then
+			if isFileExecutable $2; then
 				./$2 "$3"
 				if [ $? -ne 0 ]; then
 					p_fail "The $1 hook extension '$2' hasn't exited with code 0, preventing this commit.
