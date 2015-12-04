@@ -18,19 +18,21 @@ source $HOOK_DIR/utils/fileIsExecutable
 # executeHookExtension "post_merge" "Build/Hooks/post-merge" $@
 #
 executeHookExtension() {
-	if fileExists $2; then
-		echo "Hook CLI: Found a $1 hook extension in '$2'. Executing it now..."
+	if [[ ! -z "$2" ]]; then
+		if fileExists $2; then
+			echo "Hook CLI: Found a $1 hook extension in '$2'. Executing it now..."
 
-		if fileIsExecutable $2; then
-			./$2 "$3"
-			if [ $? -ne 0 ]; then
-				p_fail "The $1 hook extension '$2' hasn't exited with code 0, preventing this commit.
-       If this error is thrown falsely, please contact the creator of this $1 extension."
+			if fileIsExecutable $2; then
+				./$2 "$3"
+				if [ $? -ne 0 ]; then
+					p_fail "The $1 hook extension '$2' hasn't exited with code 0, preventing this commit.
+	       If this error is thrown falsely, please contact the creator of this $1 extension."
 
-				exit 1
+					exit 1
+				fi
+			else
+				echo "Hook CLI: $1 hook extension '$2' is not executable, skipping it."
 			fi
-		else
-			echo "Hook CLI: $1 hook extension '$2' is not executable, skipping it."
 		fi
 	fi
 }
