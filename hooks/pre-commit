@@ -24,49 +24,50 @@ source $HOOK_DIR/utils/parseYaml
 # Check for changes in JavaScript files, and run the configured linter against them.
 #
 if [ ! -z "$CHANGED_JS_FILES" ]; then
-	echo "Hook CLI: Found changes in JavaScript files. Linting via the local 'xo' binary..."
+	p_info "Hook CLI: Found changes in JavaScript files. Linting via the local 'xo' binary..."
 
 	if [ -f "$WORKING_DIR/node_modules/.bin/xo" ]; then
 		node $WORKING_DIR/node_modules/.bin/xo $CHANGED_JS_FILES
+		lintResults=$?
+
+		#
+		# Exit with an error code if one of the linters has found errors.
+		#
+		if [ $lintResults -ne 0 ]; then
+			p_fail "Something went wrong while linting the changed files.
+		       Fix the errors and commit again.
+
+		       If you think the linter is not intended to throw an error exit code,
+		       please contact the owner of the repository."
+
+			exit 1
+		fi
 	else
-		echo "Hook CLI: No local 'xo' binary found."
+		p_warn "Hook CLI: No local 'xo' binary found."
 	fi
-fi
-lintResults=$?
-
-#
-# Exit with an error code if one of the linters has found errors.
-#
-if [ $lintResults -ne 0 ]; then
-	p_fail "Something went wrong while linting the changed files.
-       Fix the errors and commit again.
-
-       If you think the linter is not intended to throw an error exit code,
-       please contact the owner of the repository."
-
-	exit 1
 fi
 
 #
 # Generate/Update the npm-shrinkwrap.json file, if a package.json file has been changed.
 #
 if [ ! -z "$CHANGED_PACKAGE_JSON" ]; then
-	echo "Hook CLI: Seems like you've changed a 'pacakge.json' file, creating/updating a 'npm-shrinkwrap.json' for consistent dependencies..."
+	p_info "Hook CLI: Seems like you've changed a 'pacakge.json' file, creating/updating a 'npm-shrinkwrap.json' for consistent dependencies..."
 
 	npm shrinkwrap
+	generateResults=$?
+
 	git add npm-shrinkwrap.json
-fi
-generateResults=$?
 
-#
-# Exit with an error code if one of the linters has found errors.
-#
-if [ $generateResults -ne 0 ]; then
-	p_fail "Seems like something went wrong while creating the npm-shrinkwrap file.
+	#
+	# Exit with an error code if the npm shrinkwrap aborted.
+	#
+	if [ $generateResults -ne 0 ]; then
+		p_fail "Seems like something went wrong while creating the npm-shrinkwrap file.
 
-       If this error is thrown falsely, please open a issue at ${underline}https://github.com/sitegeist/git-hooks/issues${nounderline}."
+	       If this error is thrown falsely, please open a issue at ${underline}https://github.com/sitegeist/git-hooks/issues${nounderline}."
 
-	exit 1
+		exit 1
+	fi
 fi
 
 #
