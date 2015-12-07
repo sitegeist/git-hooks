@@ -9,7 +9,7 @@
 # $1 The filepath to check.
 #
 # Usage:
-# if fileExists "$HOME/.aliases"; then
+# if isFileExecutable "$HOME/.aliases"; then
 #		echo "File '$HOME/.aliases' exists."
 # fi
 #
