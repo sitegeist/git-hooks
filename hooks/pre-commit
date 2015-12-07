@@ -53,13 +53,15 @@ fi
 if [ ! -z "$CHANGED_PACKAGE_JSON" ]; then
 	p_info "Hook CLI: Seems like you've changed a 'pacakge.json' file, creating/updating a 'npm-shrinkwrap.json' for consistent dependencies..."
 
-	npm shrinkwrap
+	# --dev is set to include devDependencies.
+	npm shrinkwrap --dev
 	generateResults=$?
 
+	# Add the generated file to the commit index.
 	git add npm-shrinkwrap.json
 
 	#
-	# Exit with an error code if the npm shrinkwrap aborted.
+	# Exit with an error code if the npm shrinkwrap command aborted.
 	#
 	if [ $generateResults -ne 0 ]; then
 		p_fail "Seems like something went wrong while creating the npm-shrinkwrap file.
