@@ -23,9 +23,9 @@ if [ $SHELLTYPE = "bash" ]; then
 		DETECTED_PROFILE="$HOME/.bashrc"
 	elif [ -f "$HOME/.bash_profile" ]; then
 		DETECTED_PROFILE="$HOME/.bash_profile"
-	fi
 	elif [ $SHELLTYPE = "zsh" ]; then
 		DETECTED_PROFILE="$HOME/.zshrc"
+	fi
 fi
 
 if [ -z $DETECTED_PROFILE ]; then
