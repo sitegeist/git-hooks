@@ -14,7 +14,7 @@ source $HOOK_DIR/utils/beforeEach
 #
 # Tests for the automatic update mechanism of node dependencies.
 #
-testAutomaticUpdateOfNodeDependenciesWithChanges() {
+function testAutomaticUpdateOfNodeDependenciesWithChanges() {
 	beforeEach
 
 	hook install > /dev/null
@@ -52,7 +52,7 @@ testAutomaticUpdateOfNodeDependenciesWithChanges() {
 	afterEach
 }
 
-testAutomaticUpdateOfNodeDependenciesWithoutChanges() {
+function testAutomaticUpdateOfNodeDependenciesWithoutChanges() {
 	beforeEach
 
 	hook install > /dev/null

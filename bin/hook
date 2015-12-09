@@ -15,7 +15,7 @@ source $HOOK_DIR/utils/typography
 #
 # Print the general cli usage guide.
 #
-print_help() {
+function print_help() {
 	echo "${bold}Hook CLI.${normal}
 
 ${underline}General Usage:${nounderline}
@@ -32,7 +32,7 @@ Need help or got an issue? Report bugs at ${underline}https://github.com/sitegei
 #
 # Print the descriptive guide for all hooks.
 #
-print_hook_help() {
+function print_hook_help() {
 	echo "${bold}Hook CLI.${normal}
 
 ${underline}List of all installed hooks:${nounderline}
@@ -44,7 +44,7 @@ prepare-commit-msg	Evaluates the commit message against the TYPO3 commit message
 #
 # Self-Update mechanism.
 #
-update__hooks() {
+function update__hooks() {
 	p_info "Updating the git-hooks..."
 
 	cd "$HOOK_DIR" && git pull origin master && rm .last_modified && touch .last_modified && cd
@@ -53,7 +53,7 @@ update__hooks() {
 #
 # Install the git-hooks if the current pwd has a .git/ dir.
 #
-install_hooks() {
+function install_hooks() {
 	if [ "$(ls -R 2>/dev/null -A `pwd`/.git)" ]; then
 		p_info "Installing git hooks in the current working directory."
 

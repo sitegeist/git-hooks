@@ -15,7 +15,7 @@ source $HOOK_DIR/utils/fileExists
 #
 # Sets up the test directory
 #
-installLinters() {
+function installLinters() {
 	echo '{
   "name": "test_working_dir",
   "version": "0.0.1",
@@ -32,7 +32,7 @@ installLinters() {
 #
 # Sets up the extended hook.
 #
-setupHookExtension() {
+function setupHookExtension() {
 	echo 'extend:' >> .hook.yml
 	echo '  pre_commit: hookExtensions/pre-commit' >> .hook.yml
 
@@ -44,7 +44,7 @@ setupHookExtension() {
 #
 # Test if we can commit without changes to .js files.
 #
-testCommitWithoutJavaScriptChanges() {
+function testCommitWithoutJavaScriptChanges() {
 	beforeEach
 
 	hook install > /dev/null
@@ -63,7 +63,7 @@ testCommitWithoutJavaScriptChanges() {
 #
 # Test if the hooks aborts if we commit js changes with errors.
 #
-testCommitWithInvalidJavaScriptChanges() {
+function testCommitWithInvalidJavaScriptChanges() {
 	beforeEach
 
 	hook install > /dev/null
@@ -80,9 +80,9 @@ testCommitWithInvalidJavaScriptChanges() {
 }
 
 #
-# Test if the hooks aborts if we commit js changes with errors.
+# Test if the hook successfully aborts if we commit js changes without errors.
 #
-testCommitWithValidJavaScriptChanges() {
+function testCommitWithValidJavaScriptChanges() {
 	beforeEach
 
 	hook install > /dev/null
@@ -98,7 +98,10 @@ testCommitWithValidJavaScriptChanges() {
 	afterEach
 }
 
-testCreationOfNpmShrinkwrapFile() {
+#
+# Test the creation of the npm shrinkwrap file if the package.json has changed.
+#
+function testCreationOfNpmShrinkwrapFile() {
 	beforeEach
 
 	hook install > /dev/null
@@ -123,7 +126,10 @@ testCreationOfNpmShrinkwrapFile() {
 	afterEach
 }
 
-testReturnCodeForFailingHookExtension() {
+#
+# Test the return code bubble for extended hooks.
+#
+function testReturnCodeForFailingHookExtension() {
 	beforeEach
 
 	hook install > /dev/null

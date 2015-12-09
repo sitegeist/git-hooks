@@ -24,7 +24,7 @@ source $HOOK_DIR/utils/parseYaml
 #
 # Logs out the error message and commit guidelines.
 #
-commitMessageGuide() {
+function commitMessageGuide() {
 	echo "The 'prepare-commit-msg' hook has found issues in your commit message.
 
 Your commit message: "$COMMIT_MSG"
@@ -40,7 +40,7 @@ https://github.com/sitegeist/git-hooks/issues\n"
 # Appends the issue number of the branch to the commit message.
 # Format ${BRANCH_TYPE}/${ISSUE_NUMBER}/${DESCRIPTION}
 #
-appendIssueNumberToCommitMessage() {
+function appendIssueNumberToCommitMessage() {
 	BRANCH_NAME=$(git symbolic-ref --short HEAD)
 	BRANCHES_TO_SKIP=(master develop)
 
@@ -63,7 +63,7 @@ appendIssueNumberToCommitMessage() {
 #
 # Appends the feature branch ticket number to the message and lets the commit message succeed.
 #
-succeedCommitMessage() {
+function succeedCommitMessage() {
 	appendIssueNumberToCommitMessage
 
 	if fileExists $CONFIG_PATH; then

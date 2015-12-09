@@ -10,7 +10,7 @@ SHELLTYPE="$(basename /$SHELL)"
 #
 # Test whether a command exists.
 #
-command_exists() {
+function command_exists() {
 	if [ `type -P $1` ]; then
 	   return 0
 	fi

@@ -16,7 +16,7 @@ source $HOOK_DIR/utils/isFileSymlink
 #
 # Tests for an invalid argument
 #
-testReturnCodeForInvalidCommand() {
+function testReturnCodeForInvalidCommand() {
 	beforeEach
 
 	hook invalid_argument > /dev/null
@@ -28,7 +28,7 @@ testReturnCodeForInvalidCommand() {
 #
 # Tests for the installation of hooks.
 #
-testPresenceOfHooks() {
+function testPresenceOfHooks() {
 	beforeEach
 
 	hook install > /dev/null
@@ -69,7 +69,7 @@ testPresenceOfHooks() {
 	afterEach
 }
 
-testReturnCodeWithoutArguments() {
+function testReturnCodeWithoutArguments() {
 	beforeEach
 
 	hook install > /dev/null
@@ -82,7 +82,7 @@ testReturnCodeWithoutArguments() {
 #
 # Tests for the 'help' command.
 #
-testOutputForHelpCommand() {
+function testOutputForHelpCommand() {
 	beforeEach
 
 	hook help > "$OUTPUT_DIR/help.result.txt"
@@ -93,7 +93,7 @@ testOutputForHelpCommand() {
 	afterEach
 }
 
-testReturnCodeForHelpCommand() {
+function testReturnCodeForHelpCommand() {
 	beforeEach
 
 	hook help > /dev/null
@@ -106,7 +106,7 @@ testReturnCodeForHelpCommand() {
 #
 # Tests for the 'help:hooks' command.
 #
-testOutputForHelpHooksCommand() {
+function testOutputForHelpHooksCommand() {
 	beforeEach
 
 	hook help:hooks > "$OUTPUT_DIR/help_hooks.result.txt"
@@ -117,7 +117,7 @@ testOutputForHelpHooksCommand() {
 	afterEach
 }
 
-testReturnCodeForHelpHooksCommand() {
+function testReturnCodeForHelpHooksCommand() {
 	beforeEach
 
 	hook help:hooks > /dev/null
@@ -130,7 +130,7 @@ testReturnCodeForHelpHooksCommand() {
 #
 # Tests for the self-update command.
 #
-testReturnCodeForSelfUpdateCommand() {
+function testReturnCodeForSelfUpdateCommand() {
 	beforeEach
 
 	hook help self-update > /dev/null

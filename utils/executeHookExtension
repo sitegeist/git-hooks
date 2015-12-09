@@ -17,7 +17,7 @@ source $HOOK_DIR/utils/isFileExecutable
 # Usage:
 # executeHookExtension "post_merge" "Build/Hooks/post-merge" $@
 #
-executeHookExtension() {
+function executeHookExtension() {
 	if [[ ! -z "$2" ]]; then
 		if fileExists $2; then
 			echo "Hook CLI: Found a $1 hook extension in '$2'. Executing it now..."

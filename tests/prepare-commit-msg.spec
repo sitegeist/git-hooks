@@ -11,7 +11,10 @@ OUTPUT_DIR="$HOOK_DIR/tests/output"
 source $HOOK_DIR/utils/afterEach
 source $HOOK_DIR/utils/beforeEach
 
-modifyTestFile() {
+#
+# Helper function to leanen the tests.
+#
+function modifyTestFile() {
 	echo "test" >> test_file
 	git add test_file
 }
@@ -19,7 +22,7 @@ modifyTestFile() {
 #
 # Tests for a commit message without prefix tags.
 #
-testOutputForCommitMessageWithoutPrimaryPrefix() {
+function testOutputForCommitMessageWithoutPrimaryPrefix() {
 	beforeEach
 
 	# Install all hooks.
@@ -36,7 +39,7 @@ testOutputForCommitMessageWithoutPrimaryPrefix() {
 
 	afterEach
 }
-testReturnCodeForCommitMessageWithoutPrimaryPrefix() {
+function testReturnCodeForCommitMessageWithoutPrimaryPrefix() {
 	beforeEach
 
 	# Install all hooks.
@@ -49,7 +52,7 @@ testReturnCodeForCommitMessageWithoutPrimaryPrefix() {
 
 	afterEach
 }
-testReturnCodeForCommitMessageWithInvalidPrefix() {
+function testReturnCodeForCommitMessageWithInvalidPrefix() {
 	beforeEach
 
 	# Install all hooks.
@@ -72,7 +75,7 @@ testReturnCodeForCommitMessageWithInvalidPrefix() {
 
 	afterEach
 }
-testReturnCodeForCommitMessageWithPrimaryPrefixes() {
+function testReturnCodeForCommitMessageWithPrimaryPrefixes() {
 	beforeEach
 
 	# Install all hooks.
@@ -105,7 +108,7 @@ testReturnCodeForCommitMessageWithPrimaryPrefixes() {
 
 	afterEach
 }
-testReturnCodeForCommitMessageWithInvalidSecondaryPrefixes() {
+function testReturnCodeForCommitMessageWithInvalidSecondaryPrefixes() {
 	beforeEach
 
 	# Install all hooks.
@@ -128,7 +131,7 @@ testReturnCodeForCommitMessageWithInvalidSecondaryPrefixes() {
 
 	afterEach
 }
-testReturnCodeForCommitMessageWithSecondaryPrefixes() {
+function testReturnCodeForCommitMessageWithSecondaryPrefixes() {
 	beforeEach
 
 	# Install all hooks.
@@ -161,7 +164,7 @@ testReturnCodeForCommitMessageWithSecondaryPrefixes() {
 
 	afterEach
 }
-testAppendedIssueNumberFromBranchName() {
+function testAppendedIssueNumberFromBranchName() {
 	beforeEach
 
 	# Install all hooks.

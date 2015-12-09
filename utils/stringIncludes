@@ -14,7 +14,7 @@
 #		echo "String 'test' includes substring 'st'."
 # fi
 #
-stringIncludes() {
+function stringIncludes() {
 	string="$1"
 	substring="$2"
 

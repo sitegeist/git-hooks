@@ -13,7 +13,7 @@
 #		echo "File '$HOME/.aliases' is a symbolic link."
 # fi
 #
-isFileSymlink() {
+function isFileSymlink() {
 	if [ -L "$1" ]; then
 		return 0
 	else
