@@ -21,9 +21,11 @@ source $HOOK_DIR/utils/parseYaml
 # Helper functions which are responsible for updating the dependencies.
 #
 function updateNodeDependencies() {
+	p_info "Updating the NPM dependencies, this may take a while..."
 	npm prune && npm install
 }
 function updateComposerDependencies() {
+	p_info "Updating the composer dependencies, this may take a while..."
 	composer install
 }
 
