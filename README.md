@@ -30,18 +30,30 @@ These git-hooks are conventional hooks, not project specific ones. Installing th
 In that case, just run `self-update` once and all hooks which you've installed via the CLI are updated. The CLI and the corresponding hooks will also update itself automatically every 30 days on every CLI run. This prevents the hooks from being in a obsolete state.
 
 ## Available git-hooks
+| Name                 | Description                                                         |
+| -------------------- | ------------------------------------------------------------------- |
+| `pre-commit`         | Lints changed files & creates a npm-shrinkwrap if necessary.        |
+| `post-merge`         | Updates the local dependencies if necessary.                        |
+| `prepare-commit-msg` | Reviews the commit message against the [guidelines](#guidelines).   |
+
 #### pre-commit
-Lints all changed `.js` files via [xo](https://github.com/sindresorhus/xo) if the directory contains a local `xo` binary.
-If the lint process exits with an error code, the commit will be aborted, until you fix the errors.
+> Lints changed files & creates a npm-shrinkwrap if necessary.
+
+We encourage the use of static analysis tools. To enforce a certain code style, and to prevent nasty code from shipping into production, we recommend to lint your source files before committing them.
+The `pre-commit` hook will automatically do this for you.
+
+As of now, we only lint `.js` files via [xo](https://github.com/sindresorhus/xo). Please note that we recommend the use of local installations of `xo` instead of global ones. This means that we expect the `xo` binary to be placed in `node_modules/.bin/xo`. This path is relative to your local git repository.
 
 The pre-commit hook also checks if a `package.json` file is in your changeset, and will automatically create and commit a `npm-shrinkwrap.json` file for you. *Note:* This functionality is kind of useless if you are using `> npm@3.0.0` - [Related issue](https://github.com/npm/npm/issues/5083).
 
 #### post-merge
+> Updates the local dependencies if necessary.
+
 If the `package.json` or `composer.json` has been changed in the upstream,
 this hook will automatically run either `npm prune && npm update` or `composer install` so your local dependencies match the current checked out HEAD.
 
 #### prepare-commit-msg
-Evaluates the commit message against the [TYPO3 Commit guidelines](#guidelines).
+> Reviews the commit message against the [guidelines](#guidelines).
 
 In case your current branch is a feature branch, the issue number of the branch gets parsed
 and automatically appended to the commit message.
@@ -77,6 +89,19 @@ extend:
   prepare_commit_msg: Build/hooks/prepare-commit-msg
 ```
 
+## Misc. configurations
+### Linter locations
+As of now, you can also specify a custom location for the `xo` binary.
+The `pre-commit` hook expects the following structure in your `.hook.yml`.
+
+Please note that the path is relative to the local git repository and is not a direct pointer to the `xo` binary.
+Instead we point to the directory which holds the `package.json`.
+From there on, we expect the `xo` binary to be placed in `node_modules/.bin/xo`.
+
+```yaml
+config:
+  xo: Packages/Sites/Sysmex.UrinalysisCom
+```
 
 ## <a name="guidelines"></a> Commit message guidelines
 In short, a commit message must be prefixed with either `[FEATURE]`, `[TASK]`, `[BUGFIX]`, `[DOCS]` or `[CLEANUP]`. F.e:

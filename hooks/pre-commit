@@ -21,26 +21,60 @@ source $HOOK_DIR/utils/executeHookExtension
 source $HOOK_DIR/utils/parseYaml
 
 #
+# Parse the config file, if existing.
+#
+if fileExists $CONFIG_PATH; then
+	eval $(parseYaml $CONFIG_PATH "CONFIG_")
+fi
+
+#
+# Get the xo linter binary location from the users config.
+#
+if [ -z "$CONFIG_config_xo" ]; then
+	XO_BINARY="$WORKING_DIR/node_modules/.bin/xo"
+else
+	XO_BINARY="$CONFIG_config_xo/node_modules/.bin/xo"
+fi
+
+#
 # Check for changes in JavaScript files, and run the configured linter against them.
 #
 if [ ! -z "$CHANGED_JS_FILES" ]; then
 	p_info "Hook CLI: Found changes in JavaScript files. Linting via the local 'xo' binary..."
 
-	if [ -f "$WORKING_DIR/node_modules/.bin/xo" ]; then
-		node $WORKING_DIR/node_modules/.bin/xo $CHANGED_JS_FILES
+	if [ -f "$XO_BINARY" ]; then
+		#
+		# If a custom location for the xo binary was set,
+		# `cd` into the main directory since we want to use the config placed in that directory.
+		#
+		if [ ! -z "$CONFIG_config_xo" ]; then
+			cd "$CONFIG_config_xo"
+		fi
+
+		#
+		# Lint the changed .js files.
+		#
+		node "node_modules/.bin/xo" $CHANGED_JS_FILES
 		lintResults=$?
+
+		#
+		# Change back into the root directory.
+		#
+		cd "$WORKING_DIR"
 
 		#
 		# Exit with an error code if one of the linters has found errors.
 		#
 		if [ $lintResults -ne 0 ]; then
 			p_fail "Something went wrong while linting the changed files.
-		       Fix the errors and commit again.
+       Fix the errors and commit again.
 
-		       If you think the linter is not intended to throw an error exit code,
-		       please contact the owner of the repository."
+       If you think the linter is not intended to throw an error exit code,
+       please contact the owner of the repository."
 
 			exit 1
+		else
+			p_success "Continuing..."
 		fi
 	else
 		p_warn "Hook CLI: No local 'xo' binary found."
@@ -75,9 +109,6 @@ fi
 #
 # Support for additional project specific hooks.
 #
-if fileExists $CONFIG_PATH; then
-	eval $(parseYaml $CONFIG_PATH "CONFIG_")
-	executeHookExtension "pre-commit" $CONFIG_extend_pre_commit $@
-fi
+executeHookExtension "pre-commit" $CONFIG_extend_pre_commit $@
 
 exit 0
