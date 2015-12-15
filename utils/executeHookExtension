@@ -20,7 +20,7 @@ source $HOOK_DIR/utils/isFileExecutable
 function executeHookExtension() {
 	if [[ ! -z "$2" ]]; then
 		if fileExists $2; then
-			echo "Hook CLI: Found a $1 hook extension in '$2'. Executing it now..."
+			p_info "Hook CLI: Found a $1 hook extension in '$2'. Executing it now..."
 
 			if isFileExecutable $2; then
 				./$2 "$3"
@@ -31,8 +31,10 @@ function executeHookExtension() {
 					exit 1
 				fi
 			else
-				echo "Hook CLI: $1 hook extension '$2' is not executable, skipping it."
+				p_warn "Hook CLI: $1 hook extension '$2' is not executable, skipping it."
 			fi
+		else
+			p_warn "Hook CLI: $1 hook extension '$2' is not existing, skipping it."
 		fi
 	fi
 }
