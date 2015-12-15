@@ -30,7 +30,7 @@ fi
 #
 # Get the xo linter binary location from the users config.
 #
-if [ -z "$CONFIG_config_xo" ]; then
+if [ -z "$CONFIG_lint_xo" ]; then
 	XO_BINARY="$WORKING_DIR/node_modules/.bin/xo"
 else
 	XO_BINARY="$CONFIG_config_xo/node_modules/.bin/xo"
@@ -47,8 +47,8 @@ if [ ! -z "$CHANGED_JS_FILES" ]; then
 		# If a custom location for the xo binary was set,
 		# `cd` into the main directory since we want to use the config placed in that directory.
 		#
-		if [ ! -z "$CONFIG_config_xo" ]; then
-			cd "$CONFIG_config_xo"
+		if [ ! -z "$CONFIG_lint_xo" ]; then
+			cd "$CONFIG_lint_xo"
 		fi
 
 		#

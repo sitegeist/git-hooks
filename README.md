@@ -29,7 +29,7 @@ These git-hooks are conventional hooks, not project specific ones. Installing th
 
 In that case, just run `self-update` once and all hooks which you've installed via the CLI are updated. The CLI and the corresponding hooks will also update itself automatically every 30 days on every CLI run. This prevents the hooks from being in a obsolete state.
 
-## Available git-hooks
+## Globally installed hooks
 | Name                 | Description                                                         |
 | -------------------- | ------------------------------------------------------------------- |
 | `pre-commit`         | Lints changed files & creates a npm-shrinkwrap if necessary.        |
@@ -70,24 +70,36 @@ The final commit message in your history will be
 refs #29381
 ```
 
-## Extending the available hooks.
-You can extend the existing hooks by creating a `.hook.yml` in your git repositories root directory.
-From there on, all paths to hook extensions are relative to this file.
-
-The hook extensions itself need to be executable, you can achieve this with `chmod +x path/to/hook/extension`.
-Each hook is immediately executed after the global hook.
-
-We expect the extension to exit with code 0.
-Also, the arguments from git which where passed to our hooks are propagated to your hook extension,
-so your hook extension acts like a standalone hook which is traditionally placed in the `.git/hooks/` directory.
+## Configuration of the global hooks
+You can configure & extend the existing hooks by creating a `.hook.yml` in your git repositories root directory.
+All paths which where specified in the `.hook.yml` are relative to the git repositories root directory.
 
 An example `.hook.yml`.
 ```yaml
+#
+# Custom location for linters. For example:
+#
+lint:
+  xo: Packages/Sites/MyPackage
+
+#
+# Paths to executable shell files which are extending the global hooks.
+# For example:
+#
 extend:
   pre_commit: Build/hooks/pre-commit
   post_merge: Build/hooks/post-merge
   prepare_commit_msg: Build/hooks/prepare-commit-msg
 ```
+
+## Extending the global hooks.
+All hook extensions need to be executable. (`chmod +x path/to/hook/extension`)
+The hook extension is immediately executed after the global hook,
+arguments which where passed to the global hook via git are propagated to your hook extension.
+
+We expect the extension to exit with code 0, otherwise the current git process will abort.
+
+TL;DR: A hook extension acts like a standalone hook which is traditionally placed in the `.git/hooks/` directory.
 
 ## Misc. configurations
 ### Linter locations
@@ -97,11 +109,6 @@ The `pre-commit` hook expects the following structure in your `.hook.yml`.
 Please note that the path is relative to the local git repository and is not a direct pointer to the `xo` binary.
 Instead we point to the directory which holds the `package.json`.
 From there on, we expect the `xo` binary to be placed in `node_modules/.bin/xo`.
-
-```yaml
-config:
-  xo: Packages/Sites/Sysmex.UrinalysisCom
-```
 
 ## <a name="guidelines"></a> Commit message guidelines
 In short, a commit message must be prefixed with either `[FEATURE]`, `[TASK]`, `[BUGFIX]`, `[DOCS]` or `[CLEANUP]`. F.e:
