@@ -55,7 +55,7 @@ with errors while starting up the project because the dependency versions have b
 The `post-merge` hook solves this problem for `git checkout`, `git pull` as well as `git merge`.
 
 If the `package.json` or `composer.json` have been changed in the upstream, it will automatically run either
-`npm prune && npm update` or `composer install` so your local dependencies match the current checked out HEAD.
+`npm prune && npm install` or `composer install` so your local dependencies match the current checked out HEAD.
 
 #### prepare-commit-msg
 > Reviews the commit message against the [guidelines](#guidelines).

@@ -30,7 +30,7 @@ function updateComposerDependencies() {
 }
 
 #
-# If a `package.json` file has been changed, execute `npm install` and `npm prune`.
+# If a `package.json` file has been changed, execute `npm prune` and `npm install`.
 #
 if stringIncludes $CHANGED_FILES 'package.json'; then
 	updateNodeDependencies
