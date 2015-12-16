@@ -41,16 +41,21 @@ In that case, just run `self-update` once and all hooks which you've installed v
 
 We encourage the use of static analysis tools. To enforce a certain code style, and to prevent nasty code from shipping into production, we recommend to lint your source files before committing them.
 The `pre-commit` hook will automatically do this for you.
+As of now, we only lint `.js` files via [xo](https://github.com/sindresorhus/xo).
 
-As of now, we only lint `.js` files via [xo](https://github.com/sindresorhus/xo). Please note that we recommend the use of local installations of `xo` instead of global ones. This means that we expect the `xo` binary to be placed in `node_modules/.bin/xo`. This path is relative to your local git repository.
+Please note that we recommend the use of local installations of `xo` instead of global ones. This means that we expect the `xo` binary to be placed in `node_modules/.bin/xo`. This path is relative to your local git repository. You can also specify a custom path to your `xo` binary, see [Linter Locations](#linterLocations) for more info.
 
 The pre-commit hook also checks if a `package.json` file is in your changeset, and will automatically create and commit a `npm-shrinkwrap.json` file for you. *Note:* This functionality is kind of useless if you are using `> npm@3.0.0` - [Related issue](https://github.com/npm/npm/issues/5083).
 
 #### post-merge
 > Updates the local dependencies if necessary.
 
-If the `package.json` or `composer.json` has been changed in the upstream,
-this hook will automatically run either `npm prune && npm update` or `composer install` so your local dependencies match the current checked out HEAD.
+In some cases, after you've checked out a branch, you will be greeted
+with errors while starting up the project because the dependency versions have been changed.
+The `post-merge` hook solves this problem for `git checkout`, `git pull` as well as `git merge`.
+
+If the `package.json` or `composer.json` have been changed in the upstream, it will automatically run either
+`npm prune && npm update` or `composer install` so your local dependencies match the current checked out HEAD.
 
 #### prepare-commit-msg
 > Reviews the commit message against the [guidelines](#guidelines).
@@ -70,7 +75,7 @@ The final commit message in your history will be
 refs #29381
 ```
 
-## Configuration of the global hooks
+## Configuration
 You can configure & extend the existing hooks by creating a `.hook.yml` in your git repositories root directory.
 All paths which where specified in the `.hook.yml` are relative to the git repositories root directory.
 
@@ -92,17 +97,17 @@ extend:
   prepare_commit_msg: Build/hooks/prepare-commit-msg
 ```
 
-## Extending the global hooks.
-All hook extensions need to be executable. (`chmod +x path/to/hook/extension`)
+## Extending the global hooks
 The hook extension is immediately executed after the global hook,
 arguments which where passed to the global hook via git are propagated to your hook extension.
 
-We expect the extension to exit with code 0, otherwise the current git process will abort.
+Please note that all hook extensions need to be executable (`chmod +x path/to/hook/extension`) and
+we expect the script to exit with code 0, otherwise the current git process will abort.
 
 TL;DR: A hook extension acts like a standalone hook which is traditionally placed in the `.git/hooks/` directory.
 
 ## Misc. configurations
-### Linter locations
+### <a name="linterLocations"></a> Linter locations
 As of now, you can also specify a custom location for the `xo` binary.
 The `pre-commit` hook expects the following structure in your `.hook.yml`.
 
