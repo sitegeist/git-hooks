@@ -8,7 +8,9 @@
 # Author: Tyll Weiß <weiss@sitegeist.de>
 #
 HOOK_DIR="$HOME/.sitegeist-hooks"
+WORKING_DIR=$(git rev-parse --show-toplevel)
 CHANGED_FILES="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
+CONFIG_PATH="$WORKING_DIR/.hook.yml"
 
 #
 # Include helper utils.
@@ -48,6 +50,7 @@ fi
 #
 if fileExists $CONFIG_PATH; then
 	eval $(parseYaml $CONFIG_PATH "CONFIG_")
+
 	executeHookExtension "post-merge" $CONFIG_extend_post_merge $@
 fi
 
