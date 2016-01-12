@@ -10,7 +10,7 @@ HOOK_DIR="$HOME/.sitegeist-hooks"
 WORKING_DIR=$(git rev-parse --show-toplevel)
 COMMIT_MSG_FILE="$WORKING_DIR/$1"
 COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
-GIT_INTERNAL_MESSAGES=("Merge ")
+GIT_INTERNAL_MESSAGES=("Merge " "Revert ")
 PRIMARY_TAGS=("\[FEATURE\] " "\[TASK\] " "\[BUGFIX\] " "\[DOCS\] " "\[CLEANUP\] ")
 SECONDARY_TAGS=("\[!!!\]" "\[WIP\]")
 
