@@ -3,7 +3,7 @@
 #
 # Tests for the pre-commit hook.
 #
-# Author: Tyll Weiß <weiss@sitegeist.de>
+# Author: Tyll Weiß <weiss@sitegeist.de>, Max Strübing <struebing@sitegeist.de>
 #
 HOOK_DIR="$HOME/.sitegeist-hooks"
 TEST_WORKING_DIR="$BASE_DIR/test_working_dir"
