@@ -67,7 +67,7 @@ function testAutomaticUpdateOfNodeDependenciesWithoutChanges() {
 	git checkout master --quiet
 	git merge anotherBranch > /dev/null 2>&1
 
-	DEPENDENCIES=$(ls $TEST_WORKING_DIR/node_modules)
+	DEPENDENCIES=$(ls $TEST_WORKING_DIR/node_modules 2>/dev/null)
 	assertNull "$DEPENDENCIES"
 
 	afterEach
