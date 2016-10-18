@@ -23,7 +23,7 @@ function installLinters() {
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "xo": "*"
+    "xo": "0.16.0"
   }
 }' > package.json
 	npm install > /dev/null 2>&1
