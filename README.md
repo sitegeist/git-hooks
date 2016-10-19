@@ -78,6 +78,7 @@ refs #29381
 ## Configuration
 You can configure & extend the existing hooks by creating a `.hook.yml` in your git repositories root directory.
 All paths which where specified in the `.hook.yml` are relative to the git repositories root directory.
+If you specify a regex for your commit messages the global commit guidelines are disabled
 
 An example `.hook.yml`.
 ```yaml
@@ -86,6 +87,12 @@ An example `.hook.yml`.
 #
 lint:
   xo: Packages/Sites/MyPackage
+
+#
+# Regex for commit message guidelines
+#
+commitmsg:
+  regex: ^t
 
 #
 # Paths to executable shell files which are extending the global hooks.
