@@ -8,7 +8,8 @@
 #
 HOOK_DIR="$HOME/.sitegeist-hooks"
 WORKING_DIR=$(git rev-parse --show-toplevel)
-COMMIT_MSG_FILE="$WORKING_DIR/$1"
+CONFIG_PATH="$WORKING_DIR/.hook.yml"
+COMMIT_MSG_FILE="$1"
 COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
 GIT_INTERNAL_MESSAGES=("Merge " "Revert ")
 PRIMARY_TAGS=("\[FEATURE\] " "\[TASK\] " "\[BUGFIX\] " "\[DOCS\] " "\[CLEANUP\] ")
@@ -25,7 +26,7 @@ source $HOOK_DIR/utils/parseYaml
 # Logs out the error message and commit guidelines.
 #
 function commitMessageGuide() {
-	echo "The 'prepare-commit-msg' hook has found issues in your commit message.
+	echo "The 'commit-msg' hook has found issues in your commit message.
 
 Your commit message: "$COMMIT_MSG"
 
@@ -68,7 +69,7 @@ function succeedCommitMessage() {
 
 	if fileExists $CONFIG_PATH; then
 		eval $(parseYaml $CONFIG_PATH "CONFIG_")
-		executeHookExtension "prepare-commit-msg" $CONFIG_extend_prepare_commit_msg $@
+		executeHookExtension "commit-msg" $CONFIG_extend_commit_msg $@
 	fi
 
 	exit 0
@@ -97,26 +98,42 @@ if [ $(git rev-parse --abbrev-ref HEAD) == "HEAD" ]; then
 fi
 
 #
-# Check if the message begins with a primary prefix tag.
+# If an option in the config file is set
 #
-if beginsWithAny "$COMMIT_MSG" "${PRIMARY_TAGS[@]}"; then
-		succeedCommitMessage
+if [ -n "$CONFIG_commitmsg_regex" ]; then
+    
+    #
+    # Check if the message fulfills the given regex
+    #
+    if grep -o "$CONFIG_commitmsg_regex" <<< "$COMMIT_MSG"; then
+        succeedCommitMessage
+    fi
 
-#
-# If nor primary tag was found, search for secondary prefix tags
-#
-elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}"; then
-		# Substring the first five chars, to remove the secondary prefix tag.
-		# ToDo: This not reliable as soon as we introduce a secondary prefix with more or less than 5 chars.
-		COMMIT_MSG_WO_SECONDARY="${COMMIT_MSG:5}"
+else
 
-		#
-		# Make sure that the secondary prefix tag is immediately followed by a primary one.
-		#
-		if beginsWithAny "$COMMIT_MSG_WO_SECONDARY" "${PRIMARY_TAGS[@]}"; then
-			succeedCommitMessage
-		fi
+    #
+    # Check if the message begins with a primary prefix tag.
+    #
+    if beginsWithAny "$COMMIT_MSG" "${PRIMARY_TAGS[@]}"; then
+                    succeedCommitMessage
+
+    #
+    # If nor primary tag was found, search for secondary prefix tags
+    #
+    elif beginsWithAny "$COMMIT_MSG" "${SECONDARY_TAGS[@]}"; then
+                    # Substring the first five chars, to remove the secondary prefix tag.
+                    # ToDo: This not reliable as soon as we introduce a secondary prefix with more or less than 5 chars.
+                    COMMIT_MSG_WO_SECONDARY="${COMMIT_MSG:5}"
+
+                    #
+                    # Make sure that the secondary prefix tag is immediately followed by a primary one.
+                    #
+                    if beginsWithAny "$COMMIT_MSG_WO_SECONDARY" "${PRIMARY_TAGS[@]}"; then
+                            succeedCommitMessage
+                    fi
+    fi
 fi
+
 
 #
 # If the script hasn't exited yet, we should abort the commit and display the commit message guidelines.
