@@ -33,7 +33,9 @@ Your commit message: "$COMMIT_MSG"
 A commit message should begin with '[FEATURE]', '[TASK]', '[BUGFIX]', '[DOCS]' or '[CLEANUP]'.
 Additionally you can prepend '[!!!]' for breaking changes or '[WIP]' for changes that aren't fully finished.
 
-If this behavior is not intended, please open a issue containing your commit message on the following bug tracker.
+If a commitmsg regex configuration in your .hook.yml is available, check to follow these rules.
+
+If this behavior is not intended, please open a issue containing your commit message and your optional regex on the following bug tracker.
 https://github.com/sitegeist/git-hooks/issues\n"
 }
 
