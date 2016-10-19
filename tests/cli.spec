@@ -3,7 +3,7 @@
 #
 # Tests for the hook CLI.
 #
-# Author: Tyll Weiß <weiss@sitegeist.de>
+# Author: Tyll Weiß <weiss@sitegeist.de>, Max Strübing <struebing@sitegeist.de>
 #
 HOOK_DIR="$HOME/.sitegeist-hooks"
 OUTPUT_DIR="$HOOK_DIR/tests/output"
@@ -58,13 +58,13 @@ function testPresenceOfHooks() {
 	#
 	# pre-commit
 	#
-	fileExists ".git/hooks/prepare-commit-msg"
+	fileExists ".git/hooks/commit-msg"
 	returnCode=$?
-	assertEquals "The prepare-commit-msg hook should be in place." 0 $returnCode
+	assertEquals "The commit-msg hook should be in place." 0 $returnCode
 
-	isFileSymlink ".git/hooks/prepare-commit-msg"
+	isFileSymlink ".git/hooks/commit-msg"
 	returnCode=$?
-	assertEquals "The prepare-commit-msg hook should be a symbolic link." 0 $returnCode
+	assertEquals "The commit-msg hook should be a symbolic link." 0 $returnCode
 
 	afterEach
 }
