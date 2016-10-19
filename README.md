@@ -34,7 +34,7 @@ In that case, just run `self-update` once and all hooks which you've installed v
 | -------------------- | ------------------------------------------------------------------- |
 | `pre-commit`         | Lints changed files & creates a npm-shrinkwrap if necessary.        |
 | `post-merge`         | Updates the local dependencies if necessary.                        |
-| `prepare-commit-msg` | Reviews the commit message against the [guidelines](#guidelines).   |
+| `commit-msg` | Reviews the commit message against the [guidelines](#guidelines) and append ticket number if available in branch(abc/<#branchnumber>/def).   |
 
 #### pre-commit
 > Lints changed files & creates a npm-shrinkwrap if necessary.
@@ -57,7 +57,7 @@ The `post-merge` hook solves this problem for `git checkout`, `git pull` as well
 If the `package.json` or `composer.json` have been changed in the upstream, it will automatically run either
 `npm prune && npm install` or `composer install` so your local dependencies match the current checked out HEAD.
 
-#### prepare-commit-msg
+#### commit-msg
 > Reviews the commit message against the [guidelines](#guidelines).
 
 In case your current branch is a feature branch, the issue number of the branch gets parsed
@@ -94,7 +94,7 @@ lint:
 extend:
   pre_commit: Build/hooks/pre-commit
   post_merge: Build/hooks/post-merge
-  prepare_commit_msg: Build/hooks/prepare-commit-msg
+  commit_msg: Build/hooks/commit-msg
 ```
 
 ## Extending the global hooks

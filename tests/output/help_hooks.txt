@@ -3,4 +3,4 @@
 [4mList of all installed hooks:[24m
 pre-commit		Lints all changed files and aborts the commit if errors are found as well as creates a npm-shrinkwrap if your package.json has been changed.
 post-merge		Updates your npm or composer dependencies if the respective meta-file was changed.
-prepare-commit-msg	Evaluates the commit message against the TYPO3 commit message guidelines.
+commit-msg	Evaluates the commit message against the TYPO3 commit message guidelines.

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 #
-# Prepare-Commit-Msg hook
+# Commit-Msg hook
 # Responsible for testing the commit message against the TYPO3 guidelines.
 #
-# Author: Tyll Weiß <weiss@sitegeist.de>
+# Author: Tyll Weiß <weiss@sitegeist.de>, Max Strübing <struebing@sitegeist.de>
 #
 HOOK_DIR="$HOME/.sitegeist-hooks"
 WORKING_DIR=$(git rev-parse --show-toplevel)
