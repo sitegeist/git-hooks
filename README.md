@@ -43,7 +43,7 @@ We encourage the use of static analysis tools. To enforce a certain code style, 
 The `pre-commit` hook will automatically do this for you.
 As of now, we only lint `.js` files via [xo](https://github.com/sindresorhus/xo).
 
-Please note that we recommend the use of local installations of `xo` instead of global ones. This means that we expect the `xo` binary to be placed in `node_modules/.bin/xo`. This path is relative to your local git repository. You can also specify a custom path to your `xo` binary, see [Linter Locations](#linterLocations) for more info.
+The pre-commit hook will execute `npm run lint`, if it's return value is 0 it will continue otherwise it throws an error message.
 
 The pre-commit hook also checks if a `package.json` file is in your changeset, and will automatically create and commit a `npm-shrinkwrap.json` file for you. *Note:* This functionality is kind of useless if you are using `> npm@3.0.0` - [Related issue](https://github.com/npm/npm/issues/5083).
 
@@ -83,13 +83,15 @@ If you specify a regex for your commit messages the global commit guidelines are
 An example `.hook.yml`.
 ```yaml
 #
-# Custom location for linters. For example:
+# Custom location for package.json. For example:
+# only necessary when the package.json is not placed in the root directory of the project
 #
-lint:
-  xo: Packages/Sites/MyPackage
+path:
+  packageJSON: Web/typo3conf/ext/sms_boilerplate/
 
 #
 # Regex for commit message guidelines
+# Otherwise the global ones will be used
 #
 commitmsg:
   regex: ^t
@@ -114,13 +116,12 @@ we expect the script to exit with code 0, otherwise the current git process will
 TL;DR: A hook extension acts like a standalone hook which is traditionally placed in the `.git/hooks/` directory.
 
 ## Misc. configurations
-### <a name="linterLocations"></a> Linter locations
-As of now, you can also specify a custom location for the `xo` binary.
+### <a name="packagejsonLocation"></a> packe.json location
+As of now, you can also specify a custom location for the `package.json`.
 The `pre-commit` hook expects the following structure in your `.hook.yml`.
 
-Please note that the path is relative to the local git repository and is not a direct pointer to the `xo` binary.
+Please note that the path is relative to the local git repository and is not a direct pointer to the `package.json`.
 Instead we point to the directory which holds the `package.json`.
-From there on, we expect the `xo` binary to be placed in `node_modules/.bin/xo`.
 
 ## <a name="guidelines"></a> Commit message guidelines
 In short, a commit message must be prefixed with either `[FEATURE]`, `[TASK]`, `[BUGFIX]`, `[DOCS]` or `[CLEANUP]`. F.e:

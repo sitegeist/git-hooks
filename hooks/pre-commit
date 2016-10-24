@@ -4,14 +4,14 @@
 # Pre-Commit hook
 # Responsible for linting the changed files.
 #
-# Author: Tyll Weiß <weiss@sitegeist.de>
+# Author: Tyll Weiß <weiss@sitegeist.de>, Max Strübing <struebing@sitegeist.de>
 #
 HOOK_DIR="$HOME/.sitegeist-hooks"
 WORKING_DIR=$(git rev-parse --show-toplevel)
 CHANGED_JS_FILES=$(git diff --cached --name-only -- '*.js')
-CHANGED_PACKAGE_JSON=$(git diff --cached --name-only -- 'package.json')
+CHANGED_PACKAGE_JSON=$(git diff --cached --name-only -- '*package.json')
 CONFIG_PATH="$WORKING_DIR/.hook.yml"
-XO_BINARY_BASE_BATH="node_modules/.bin/xo"
+LINT_COMMAND="npm run lint"
 
 #
 # Include helper utils.
@@ -31,31 +31,26 @@ fi
 #
 # Get the xo linter binary location from the users config.
 #
-if [ -z "$CONFIG_lint_xo" ]; then
-	XO_BINARY="$WORKING_DIR/$XO_BINARY_BASE_BATH"
+if [ -z "$CONFIG_path_package.json" ]; then
+	PACKAGE_JSON_PATH="$WORKING_DIR/"
 else
-	XO_BINARY="$WORKING_DIR/$CONFIG_lint_xo/$XO_BINARY_BASE_BATH"
+	PACKAGE_JSON_PATH="$WORKING_DIR/$CONFIG_path_packageJSON"
 fi
 
 #
 # Check for changes in JavaScript files, and run the configured linter against them.
 #
 if [ ! -z "$CHANGED_JS_FILES" ]; then
-	p_info "Hook CLI: Found changes in JavaScript files. Linting via the local 'xo' binary..."
+	p_info "Hook CLI: Found changes in JavaScript files. Linting via npm run lint"
 
-	if [ -f "$XO_BINARY" ]; then
-		#
-		# If a custom location for the xo binary was set,
-		# `cd` into the main directory since we want to use the config placed in that directory.
-		#
-		if [ ! -z "$CONFIG_lint_xo" ]; then
-			cd "$WORKING_DIR/$CONFIG_lint_xo"
-		fi
+	if [ -f "$PACKAGE_JSON_PATH/package.json" ]; then
+
+                cd $PACKAGE_JSON_PATH
 
 		#
 		# Lint the changed .js files.
 		#
-		node "node_modules/.bin/xo" $CHANGED_JS_FILES
+		npm run lint
 		lintResults=$?
 
 		#
@@ -78,7 +73,7 @@ if [ ! -z "$CHANGED_JS_FILES" ]; then
 			p_success "Continuing..."
 		fi
 	else
-		p_warn "Hook CLI: No local 'xo' binary found."
+		p_warn "Hook CLI: No package.json found."
 	fi
 fi
 
@@ -91,7 +86,7 @@ if [ ! -z "$CHANGED_PACKAGE_JSON" ]; then
 	# --dev is set to include devDependencies.
 	npm shrinkwrap --dev
 	generateResults=$?
-
+        
 	# Add the generated file to the commit index.
 	git add npm-shrinkwrap.json
 
