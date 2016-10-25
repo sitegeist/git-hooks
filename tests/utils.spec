@@ -12,6 +12,7 @@ source $HOOK_DIR/utils/afterEach
 source $HOOK_DIR/utils/beforeEach
 source $HOOK_DIR/utils/fileExists
 source $HOOK_DIR/utils/isFileExecutable
+source $HOOK_DIR/utils/isFileSymlink
 
 #
 # Tests fileExists
@@ -49,6 +50,30 @@ function testIsFileExecutable() {
     touch $FILENAME
     isFileExecutable $FILENAME
     assertEquals "isFileExecutable should return an error value if a file is not executable" 1 $?
+    rm $FILENAME
+
+    afterEach
+}
+
+#
+# Tests isFileSymlink
+#
+function testIsFileSymlink() {
+    beforeEach
+
+    FILENAME=$(date +%s)
+    SYMLINK="symlink-$FILENAME"
+    touch $FILENAME
+    ln -s $FILENAME $SYMLINK
+    isFileSymlink $SYMLINK
+    assertEquals "isFileSymlink should return a success value if a file is a symlink" 0 $?
+    rm $FILENAME
+    rm $SYMLINK
+
+    FILENAME=$(date +%s)
+    touch $FILENAME
+    isFileSymlink $FILENAME
+    assertEquals "isFileSymlink should return an error value if a file is not a symlink" 1 $?
     rm $FILENAME
 
     afterEach
