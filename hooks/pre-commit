@@ -29,7 +29,7 @@ if fileExists $CONFIG_PATH; then
 fi
 
 #
-# Get the xo linter binary location from the users config.
+# Get the package.json location from the users config.
 #
 if [ -z "$CONFIG_path_package.json" ]; then
 	PACKAGE_JSON_PATH="$WORKING_DIR/"
