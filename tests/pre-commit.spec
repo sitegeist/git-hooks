@@ -23,8 +23,8 @@ function installLinters() {
   "author": "",
   "license": "ISC",
   "scripts": {
-    "lint": "npm run lint",
-  }
+    "lint": "xo *.js"
+  },
   "dependencies": {
     "xo": "0.16.0"
   }
@@ -76,7 +76,7 @@ function testCommitWithInvalidJavaScriptChanges() {
 
 	echo "test" > "test.js"
 	git add test.js
-	git commit -m "[TASK] Add a test js file." > /dev/null 2>&1
+	git commit -m "[TASK] Add a test js file." 
 	assertEquals "The pre-commit hook should exit with an error code if errors are found within the changed .js files." 1 $?
 
 	afterEach
@@ -95,7 +95,7 @@ function testCommitWithValidJavaScriptChanges() {
 
 	echo "console.log('test');" > "test.js"
 	git add test.js
-	git commit -m "[TASK] Add a test js file." > /dev/null 2>&1
+	git commit -m "[TASK] Add a test js file." 
 	assertEquals "The pre-commit hook should exit with an success code if no errors are found within the changed .js files." 0 $?
 
 	afterEach
