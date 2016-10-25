@@ -22,6 +22,9 @@ function installLinters() {
   "description": "",
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "lint": "npm run lint",
+  }
   "dependencies": {
     "xo": "0.16.0"
   }
