@@ -11,6 +11,7 @@ OUTPUT_DIR="$HOOK_DIR/tests/output"
 source $HOOK_DIR/utils/afterEach
 source $HOOK_DIR/utils/beforeEach
 source $HOOK_DIR/utils/fileExists
+source $HOOK_DIR/utils/isFileExecutable
 
 #
 # Tests fileExists
@@ -18,7 +19,7 @@ source $HOOK_DIR/utils/fileExists
 function testFileExists() {
     beforeEach
 
-    FILENAME=$(date +%s )
+    FILENAME=$(date +%s)
     touch $FILENAME
     fileExists $FILENAME
     assertEquals "fileExists should return a success value if a file exists" 0 $?
@@ -28,6 +29,27 @@ function testFileExists() {
     fileExists $FILENAME
     assertEquals "fileExists should return an error code if a file not exists" 1 $?
     
+    afterEach
+}
+
+#
+# Tests isFileExecutable
+#
+function testIsFileExecutable() {
+    beforeEach
+
+    FILENAME=$(date +%s)
+    touch $FILENAME
+    chmod +x $FILENAME
+    isFileExecutable $FILENAME
+    assertEquals "isFileExecutable should return a success value if a file is executable" 0 $?
+    rm $FILENAME
+
+    FILENAME=$(date +%s)
+    touch $FILENAME
+    isFileExecutable $FILENAME
+    assertEquals "isFileExecutable should return an error value if a file is not executable" 1 $?
+
     afterEach
 }
 
