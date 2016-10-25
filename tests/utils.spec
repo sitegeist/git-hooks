@@ -49,6 +49,7 @@ function testIsFileExecutable() {
     touch $FILENAME
     isFileExecutable $FILENAME
     assertEquals "isFileExecutable should return an error value if a file is not executable" 1 $?
+    rm $FILENAME
 
     afterEach
 }
