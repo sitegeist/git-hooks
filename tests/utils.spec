@@ -13,6 +13,7 @@ source $HOOK_DIR/utils/beforeEach
 source $HOOK_DIR/utils/fileExists
 source $HOOK_DIR/utils/isFileExecutable
 source $HOOK_DIR/utils/isFileSymlink
+source $HOOK_DIR/utils/stringIncludes
 
 #
 # Tests fileExists
@@ -75,6 +76,21 @@ function testIsFileSymlink() {
     isFileSymlink $FILENAME
     assertEquals "isFileSymlink should return an error value if a file is not a symlink" 1 $?
     rm $FILENAME
+
+    afterEach
+}
+
+#
+# Tests stringIncludes
+#
+function testStringIncludes() {
+    beforeEach
+
+    stringIncludes "HUBSCHRAUBERRR...SCHUPPEN" "RAUB"
+    assertEquals "stringIncludes should return 1(true) if a string includes a substr" 1 $?
+
+    stringIncludes "HUND" "SCHUH"
+    assertEquals "stringIncludes should return 0(false) if a string does not include a substr" 0 $?
 
     afterEach
 }
