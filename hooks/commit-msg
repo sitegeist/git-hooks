@@ -107,7 +107,8 @@ if [ -n "$CONFIG_commitmsg_regex" ]; then
     #
     # Check if the message fulfills the given regex
     #
-    if grep -o "$CONFIG_commitmsg_regex" <<< "$COMMIT_MSG"; then
+    echo $CONFIG_commitmsg_regex
+    if grep -Eo "$CONFIG_commitmsg_regex" <<< "$COMMIT_MSG"; then
         succeedCommitMessage
     fi
 

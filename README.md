@@ -92,9 +92,11 @@ path:
 #
 # Regex for commit message guidelines
 # Otherwise the global ones will be used
+# 
+# The example implements the neos commit guidelines
 #
 commitmsg:
-  regex: ^t
+  regex: ^(!!! )?(?TASK|BUGFIX|DOCS|FEATURE|SECURITY|MERGE): .{1,50}
 
 #
 # Paths to executable shell files which are extending the global hooks.
