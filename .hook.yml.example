@@ -1,0 +1,24 @@
+#
+# Custom location for package.json. For example:
+# only necessary when the package.json is not placed in the root directory of the project
+#
+#path:
+#  packageJSON: Web/typo3conf/ext/sms_boilerplate/
+
+#
+# Regex for commit message guidelines
+# Otherwise the global ones will be used
+# 
+# The example implements the neos commit guidelines
+#
+#commitmsg:
+#  regex: ^(!!! )?(?TASK|BUGFIX|DOCS|FEATURE|SECURITY|MERGE): .{1,50}
+
+#
+# Paths to executable shell files which are extending the global hooks.
+# For example:
+#
+#extend:
+#  pre_commit: Build/hooks/pre-commit
+#  post_merge: Build/hooks/post-merge
+#  commit_msg: Build/hooks/commit-msg<Paste>

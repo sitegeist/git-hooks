@@ -58,6 +58,8 @@ function install_hooks() {
 		p_info "Installing git hooks in the current working directory."
 
 		HOOKS=$HOOK_DIR/hooks/*
+                cp -n $HOOK_DIR/.hook.yml.example .hook.yml
+		p_info "Copying sample .hook.yml if no one exists"
 		for f in $HOOKS
 		do
 			if [ -f "`pwd`/.git/hooks/$(basename $f)" ]; then
