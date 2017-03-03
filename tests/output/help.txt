@@ -1,7 +1,7 @@
 [1mHook CLI.(B[m
 
 [4mGeneral Usage:[24m
-'cd' into your target directory which contains your local '.git/' repository and run 'hook'.
+'cd' into your target directory which contains your local '.git/' repository and run 'hook install'.
 
 [4mList of all available commands:[24m
 help		Prints the general CLI usage.
