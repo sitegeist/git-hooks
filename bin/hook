@@ -19,7 +19,7 @@ function print_help() {
 	echo "${bold}Hook CLI.${normal}
 
 ${underline}General Usage:${nounderline}
-'cd' into your target directory which contains your local '.git/' repository and run 'hook'.
+'cd' into your target directory which contains your local '.git/' repository and run 'hook install'.
 
 ${underline}List of all available commands:${nounderline}
 help		Prints the general CLI usage.
